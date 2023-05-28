@@ -6,7 +6,7 @@ import "../Page.css";
 
 
 
-const LoginDetailsPage = ({ addUser30, userName1, name1, email1, phone1, gender1, pic1, onPrev, setActiveUser }) => {
+const LoginDetailsPage = ({ addUser30, userName1, name1, pic1, onPrev, setActiveUser }) => {
   //const {adduser1, userName1, name1, email1, phone1, gender1,pic1, onPrev} = props;
 
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ const LoginDetailsPage = ({ addUser30, userName1, name1, email1, phone1, gender1
     initRobustPassword(childData);
   };
 
-  const onSubmit1 = (e) => {
+  const onSubmit1 = async (e) => {
 
     e.preventDefault();
     let caps, small, num, specialSymbol, checkPassword;
@@ -83,18 +83,50 @@ const LoginDetailsPage = ({ addUser30, userName1, name1, email1, phone1, gender1
     }
     else {
       const name = name1;
+      const pass = document.getElementById("password").value;
       const username = userName1;
-      const email = email1;
-      const phone = phone1;
-      const gender = gender1;
+      // const email = email1;
+      // const phone = phone1;
+      // const gender = gender1;
       const pic = pic1;
       setActiveUser(userName1);
-      const pass = document.getElementById("password").value;
+      
+      //const pass = document.getElementById("password").value;
+      try{
+        const response = await fetch('http://localhost:5000/api/Users', {
+          method: 'post',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            password: pass,
+            displayName: name,
+            profilePic: pic,
+            // gender: gender,
+            // phone: phone,
+            // email: email,
+          }),
+        });
+    
+    if (response.ok) {
       alert("Signup complete!"); // Show alert message
-      addUser30(name, username, pass, pic, gender, phone, email);
+      //addUser30(name, pass, username, pic);
       navigate("/");
+    } 
+      if(response.status == 409){
+        alert("This username already exists in the system, try another name.");
+      }
+      else {
+      // Handle error response from the server
+      setError("Error during signup");
+    }
+  } catch (error) {
+    // Handle network error or other exceptions
+    setError("Error occurred during signup");
     }
   }
+};
 
   return (
     <div className="login-page">
