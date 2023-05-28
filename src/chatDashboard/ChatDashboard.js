@@ -25,8 +25,6 @@ function ChatDashboard({activeUser}) {
     if(user) {
         p1 = user.pic;
     }
-    
-    
 
     const [contactList, setcontactList] = useState(Contacts);
     const [selectedMessages, setSelectedMessages] = useState(messList);

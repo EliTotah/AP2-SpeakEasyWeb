@@ -52,7 +52,6 @@ function Page({ title, fields, onNext, onPrev ,formValues1}) {
       return;
     }
     if (onNext) {
-      console.log(formValues);
       onNext(formValues);
     }
   };
