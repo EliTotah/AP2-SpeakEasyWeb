@@ -14,10 +14,43 @@ function LoginPage(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const user = Users.find((user) => user.userName === username && user.password === password);
+        const data1 = {
+            username: username,
+            password: password
+        }
+        const res = await fetch('http://localhost:5000/api/Tokens', {
+            'method': 'post', // send a post request
+            'headers': {
+                'Content-Type': 'application/json', // the data (username/password) is in the form of a JSON object
+            },
+            'body': JSON.stringify(data1) // The actual data (username/password)
+        });
+        // The server's response is a json object
+        const json = await res.json()
+        console.log(json);
+        if (res.status != 200)
+            alert('Invalid username and/or password')
+        else {
+            // Correct username/password
+            // Take the token the server sent us
+            // and make *another* request to the homepage
+            // but attach the token to the request
+            const res = await fetch('http://localhost:5000/api/Chats', {
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'authorization': 'bearer ' + json.token // attach the token
+                },
+            }
+            )
+            // Show the server's response
+            const result = await res.json()
+            console.log(result);
+            alert('the secret data is: ' + result.data)
+        }
 
+        /*//const user = Users.find((user) => user.userName === username && user.password === password);
         if (user) {
             // successful login
             const name = user.userName;
@@ -27,7 +60,7 @@ function LoginPage(props) {
         } else {
             // login failed
             alert('Invalid username or password');
-        }
+        }*/
     };
 
     const handleUsernameChange = (event) => {
