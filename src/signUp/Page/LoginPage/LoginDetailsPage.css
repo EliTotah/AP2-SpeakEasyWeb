@@ -1,0 +1,151 @@
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: sans-serif;
+}
+.login-page {
+  background-repeat: no-repeat;
+  position: relative;
+    width: 100%;
+    transition: margin-left 0.3s ease-in-out;
+  }
+  
+  .login-page .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 550;
+  }
+
+  .login-page .field {
+    width: 330px;
+    height: 45px;
+    margin: 10px 0;
+    display: flex;
+    position: absolute;
+  }
+
+
+.login-page .field input:focus {
+  outline: none;
+}
+
+  .login-page .field .label {
+    padding: -5px;
+    position: absolute;
+    top: -30px;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 0px;
+  }
+  .login-page .field input {
+    height: 100%;
+    width: calc(100%);
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding-left: 15px;
+    margin-top: 10px;
+    font-size: 15px;
+    padding-right: 30px; /* Add padding for the icon */
+  }
+  
+  .login-page .field input:focus {
+    outline: none;
+  }
+  .login-page .strong-password {
+    height: 100%;
+    width: 100%;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    margin-top: -30px;
+    padding-left: 15px;
+    font-size: 18px;
+  }
+
+  .login-page .passwordmassege{
+    color: rgb(0, 0, 0);
+    font-size: 11px;
+    text-align: left;
+    margin-bottom: 3px;
+  }
+  .login-page .password-toggle-icon {
+    position: absolute;
+    top: 35px;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+
+  .login-page .errors{
+    color: rgb(253, 0, 0);
+    font-size: 11px;
+    text-align: left;
+  }
+
+  .login-page .field {
+    position: relative;
+  }
+  
+  .login-page .field input:required + label:after {
+    content: "*";
+    color: rgb(0, 0, 0);
+    margin-left: 5px;
+  }
+  
+  .login-page .field input:invalid + span:before {
+    content: "*";
+    color: rgb(0, 0, 0);
+    margin-right: 3px;
+  }
+  
+  .login-page .field span {
+    position: absolute;
+    bottom: -20px;
+    font-size: 12px;
+    color: rgb(0, 0, 0);
+  }
+  
+  .required {
+    margin-top: 15px;
+    color: rgb(0, 0, 0);
+    margin-right: 15px;
+  }
+  .login-page .field button {
+    width: 100%;
+    height: calc(100% + 5px);
+    border: none;
+    background: #7f5feb;
+    margin-top: -20px;
+    border-radius: 5px;
+    color: #000000;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.5s ease;
+  }
+  
+  .login-page .field button:hover {
+    background: #5d33e6;
+  }
+  
+  .login-page .btns button {
+    margin-top: 20px !important;
+    margin-left: 23px;
+  }
+  
+  .login-page .btns button.prev {
+    margin-right: 3px;
+    font-size: 17px;
+  }
+  
+  .login-page .btns button.next {
+    margin-left: 3px;
+  }
+

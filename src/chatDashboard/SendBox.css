@@ -1,0 +1,70 @@
+.chatbox-input {
+    position:relative;
+    width: 100%;
+    height: 60px;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chatbox-input i {
+    cursor: pointer;
+    font-size: 1.8em;
+    color: #515855;
+  }
+  
+  .chatbox-input i:nth-child(1) {
+     margin: 15px;
+  }
+  
+  .chatbox-input i:last-child {
+    margin-right: 25px;
+  }
+  
+   .chatbox-input input {
+      position: relative;
+      width: 90%;
+      margin: 0 20px;
+      padding: 10px 20px;
+      border-radius:10px;
+      font-size: 1em;
+      border:none;
+      outline:none;
+   }
+  
+   .btn-primary {
+    background-color: #34af23;
+    border-color: #34af23;
+  }
+  
+  .btn-primary:hover {
+    background-color: #128C7E;
+    border-color: #128C7E;
+  }
+  
+  .modal-header {
+    background-color: #128C7E;
+    color: white;
+    border-bottom: none;
+  }
+  
+  .modal-footer {
+    border-top: none;
+  }
+  
+  .btn-secondary {
+    color: #128C7E;
+    border-color: #128C7E;
+  }
+  
+  .btn-secondary:hover {
+    color: white;
+    background-color: #128C7E;
+    border-color: #128C7E;
+  }
+  
+  a {
+    color: #87888c;
+  }
+  

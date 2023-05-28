@@ -1,0 +1,116 @@
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: sans-serif;
+}
+.ContainPage {
+  background-repeat: no-repeat;
+  position: relative;
+    width: 100%;
+    transition: margin-left 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.ContainPage .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 550;
+}
+
+.ContainPage .field {
+  width: 330px;
+  height: 45px;
+  margin: 25px 0;
+  display: flex;
+  position: absolute;
+}
+
+.ContainPage .field .label {
+  position: absolute;
+  top: -30px;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.ContainPage .field input {
+  height: 100%;
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  padding-left: 15px;
+  font-size: 15px;
+}
+
+.ContainPage .field button {
+  width: 100%;
+  height: calc(100% + 5px);
+  border: none;
+  background: #7f5feb;
+  margin-top: -20px;
+  border-radius: 5px;
+  color: #000000;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: 0.5s ease;
+}
+
+.ContainPage .field button:hover {
+  background: #5d33e6;
+}
+
+.ContainPage .btns button {
+  margin-top: 20px !important;
+}
+
+.ContainPage .btns button.prev {
+  margin-right: 3px;
+  font-size: 17px;
+}
+
+.ContainPage .btns button.next {
+  margin-left: 3px;
+}
+
+
+.error {
+  color: rgb(0, 0, 0);
+  font-size: 12px;
+  top: -30px;
+}
+
+.ContainPage .field {
+  position: relative;
+}
+
+.ContainPage .field input:required + label:after {
+  content: "*";
+  color: rgb(0, 0, 0);
+  margin-left: 5px;
+}
+
+.ContainPage .field input:invalid + span:before {
+  content: "*";
+  color: rgb(0, 0, 0);
+  margin-right: 3px;
+}
+
+
+
+.required {
+  top: -10px;
+  left: -20px;
+  color: rgb(0, 0, 0);
+  margin-right: 8px;
+}
+
+.field btns{
+  margin-top: 10px;
+ }

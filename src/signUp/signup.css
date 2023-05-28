@@ -1,0 +1,45 @@
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: sans-serif;
+}
+.signupPage{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 650px;
+}
+
+::selection{
+
+  color: #fff;
+  background:#6497c6;
+}
+
+.signupContainer{
+  width: 420px;
+  height: 100%;
+
+  background-color: rgba(255, 255, 255, 0.414); /* Transparent color */
+  text-align: center;
+  border-radius: 5px;
+  padding: 20px 30px 10px 30px;
+}
+.signupContainer header{
+  font-size: 30px;
+  font-weight: 600;
+  margin: 0 0 30px 0;
+ }
+ .signup-form{
+  height: 400px;
+ }
+
+ .field-btns{
+  margin-top: 10px;
+ }
