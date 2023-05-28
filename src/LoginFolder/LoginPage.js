@@ -11,14 +11,14 @@ import { useNavigate } from 'react-router-dom';
 function LoginPage(props) {
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username1, setUsername] = useState('');
+    const [password1, setPassword] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data1 = {
-            username: username,
-            password: password
+            username: username1,
+            password: password1
         }
         const res = await fetch('http://localhost:5000/api/Tokens', {
             'method': 'post', // send a post request
@@ -28,26 +28,13 @@ function LoginPage(props) {
             'body': JSON.stringify(data1) // The actual data (username/password)
         });
         // The server's response is a json object
-        const json = await res.json()
-        console.log(json);
+        const json = await res.text();
         if (res.status != 200)
             alert('Invalid username and/or password')
         else {
-            // Correct username/password
-            // Take the token the server sent us
-            // and make *another* request to the homepage
-            // but attach the token to the request
-            const res = await fetch('http://localhost:5000/api/Chats', {
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'authorization': 'bearer ' + json.token // attach the token
-                },
-            }
-            )
-            // Show the server's response
-            const result = await res.json()
-            console.log(result);
-            alert('the secret data is: ' + result.data)
+            // Navigate to the ChatDashboard route with name and picture as URL parameters
+            navigate(`/Chat`);
+        
         }
 
         /*//const user = Users.find((user) => user.userName === username && user.password === password);
