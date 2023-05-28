@@ -1,0 +1,11 @@
+body{
+  font-family: sans-serif;
+  background: url("./img/backgroundchat.png");
+  background-repeat: no-repeat;
+   background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+

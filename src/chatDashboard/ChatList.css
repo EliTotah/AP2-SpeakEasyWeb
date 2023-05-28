@@ -1,0 +1,62 @@
+
+  .message-box {
+    position:relative;
+    display: flex;
+    width:100%;
+    margin: 0px 0;
+  }
+  
+  .message-box p {
+    position:relative;
+    right: 0;
+    text-align: right;
+    max-width: 65%;
+    padding: 12px;
+    background: #c6e9f8;
+    border-radius: 10px;
+    font-size: 0.9em;
+  }
+  
+  .message-box.my-message p::before {
+    content : '';
+    position: absolute;
+    top: 0;
+    right: -12px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #c6e9f8 0%, #c6e9f8 50%, transparent 50%, transparent);
+  }
+  
+  .message-box p span {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8em;
+    opacity: 0.5;
+  }
+  
+  .my-message {
+    justify-content: flex-end;
+  }
+  
+  .friend-message p {
+    background: #fff;
+  }
+  
+  .friend-message {
+    justify-content: flex-start;
+  
+  }
+  
+  .chat-container .my-message i {
+    color: yellow;
+  }
+  
+  .message-box.friend-message::before {
+    content : '';
+    position: absolute;
+    top: 0;
+    left: -0px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(225deg, #fff 0%, #fff 50%, transparent 50%, transparent);
+  }

@@ -1,0 +1,79 @@
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: sans-serif;
+}
+.gender-page {
+    width: 25%;
+    transition: margin-left 0.3s ease-in-out;
+  }
+
+  .gender-page .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 550;
+    margin-left: 24px;
+  }
+
+  .gender-page .field {
+    width: 330px;
+    height: 45px;
+    margin: 25px 0;
+    display: flex;
+    position: relative;
+  }
+  
+  .gender-page .field .label {
+    position: absolute;
+    top: -30px;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
+  
+  .gender-page select {
+    width: 100%;
+    padding-left: 10px;
+    font-size: 17px;
+    font-weight: 500;
+  }
+  
+  .gender-page .field button {
+    width: 100%;
+    height: 45px;
+    border: none;
+    background: #7f5feb;
+    margin-top: 20px;
+    border-radius: 5px;
+    color: #000000;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.5s ease;
+  }
+  
+  .gender-page .field button:hover {
+    background: #5d33e6;
+  }
+  
+  .gender-page .btns button {
+    margin-top: 10px !important;
+    margin-left: 23px;
+  }
+  
+  .gender-page .btns button.prev {
+    margin-right: 3px;
+    font-size: 17px;
+  }
+  
+  .gender-page .btns button.next {
+    margin-left: 3px;
+  }
+
+  

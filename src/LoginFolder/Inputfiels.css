@@ -1,0 +1,24 @@
+/* Set the display, margin, background, border, padding, width, outline, text-align, color, and transition properties for the text and password input fields inside the box class */
+.box input[type = "text"],.box input[type = "password"] {
+    font-family: sans-serif;
+    display: block;
+    margin: 20px auto;
+    background: transparent;
+    border: 1px solid rgb(10, 101, 117);
+    padding: 14px 10px;
+    width: 320px;
+    outline: none;
+    font-size: 15px;
+    text-align: center;
+    color: #1f1f1f;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    -ms-transition: all .2s ease-out;
+    -o-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+  }
+  
+  /* Set the color for the placeholder text in the input fields */
+  ::-webkit-input-placeholder {
+    color: #3d3c3c;
+  }
