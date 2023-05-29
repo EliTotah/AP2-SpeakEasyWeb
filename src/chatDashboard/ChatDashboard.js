@@ -18,19 +18,62 @@ function ChatDashboard({activeUser}) {
 
     const location = useLocation();
 
-    // Get the name and picture from the URL parameters
-    const name1 = new URLSearchParams(location.search).get('name');
-    var p1="";
-    const user = Users.find((user) => user.userName === name1);
-    if(user) {
-        p1 = user.pic;
-    }
+    const [displayName1, setdisplayName] = useState();
+    const [pictureHead, setpictureHead] = useState();
+    const [user, setUser] = useState();
 
-    const [contactList, setcontactList] = useState(Contacts);
+    const [contactList, setcontactList] = useState([]);
     const [selectedMessages, setSelectedMessages] = useState(messList);
 
     const [picChatter, setpicChatter] = useState(biden);
     const [nameChatter, setnameChatter] = useState("Biden");
+
+
+    // Get the name and picture from the URL parameters
+    const token = new URLSearchParams(location.search).get('token');
+    const userna = new URLSearchParams(location.search).get('usern');
+
+    var p1="";
+    /*const user = Users.find((user) => user.userName === name1);
+    if(user) {
+        p1 = user.pic;
+    }*/
+    async function fetchUserData() {
+        try {
+            const response = await fetch(`http://localhost:5000/api/Users/${userna}`, {
+                'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token // attach the token
+                },
+            });
+            const data = await response.json();
+            setpictureHead(data.profilePic);
+            setdisplayName(data.displayName);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+    }
+
+    async function fetchchatsData() {
+        try {
+            const response = await fetch(`http://localhost:5000/api/Chats`, {
+                'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token // attach the token
+                },
+            });
+            const data = await response.json();
+            setcontactList(data);
+            
+            } catch (error) {
+                console.error('Error:', error);
+            }
+    }
+
+        fetchUserData();
+        fetchchatsData();
+
+
 
     const addContact = (pic1, name1, time1, unreadmsg1, messages1) => {
         // Update the Contacts array directly
@@ -54,15 +97,33 @@ function ChatDashboard({activeUser}) {
         setSelectedMessages(contact.messages);
         setpicChatter(contact.pic);
         setnameChatter(contact.name);
-      };
+    };
 
+    /*const handleContactClick2 = async (contact) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
+                'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token // attach the token
+                },
+            });
+            const data = await response.json();
+            setSelectedMessages(data);
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        setSelectedMessages(contact.messages);
+        setpicChatter(contact.pic);
+        setnameChatter(contact.name);
+    };*/
 
   return (
     <div className="chatPage">
         <div className="background-green"/> 
         <div className="main-container">
             <div className="left-container">
-                <HeaderProfile addCon={addContact}  name1={name1} pic1={p1}/> 
+                <HeaderProfile addCon={addContact}  name1={displayName1} pic1={pictureHead}/> 
                 <SearchBox doSearch={doSearch}/>
                 <div className="contacts" >
                     <ContactListResults contacts={contactList} onContactClick={handleContactClick}/>

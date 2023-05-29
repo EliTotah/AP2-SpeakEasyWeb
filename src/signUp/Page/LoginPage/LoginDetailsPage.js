@@ -89,7 +89,7 @@ const LoginDetailsPage = ({ addUser30, userName1, name1, pic1, onPrev, setActive
       // const phone = phone1;
       // const gender = gender1;
       const pic = pic1;
-      setActiveUser(userName1);
+      //setActiveUser(userName1);
       
       //const pass = document.getElementById("password").value;
       try{
