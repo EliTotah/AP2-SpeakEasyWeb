@@ -10,9 +10,9 @@ function CheckActiveUser({element, activeUser}){
   const navi= useNavigate();
   useEffect(() =>{
     if(!activeUser){
+      console.log("is activ");
       navi('/');
     }
-    console.log(activeUser)
   }, [activeUser, navi]);
 
   return activeUser ? element : null;
@@ -26,8 +26,8 @@ const [activeUser , setActiveUser] = useState("");
     <div>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<LoginPage/>}/>
-            <Route path='/SignUp' element={<SignupForm setActiveUser={setActiveUser}/>}/>
+            <Route path='/' element={<LoginPage setActiveUser={setActiveUser}/>}/>
+            <Route path='/SignUp' element={<SignupForm/>}/>
             <Route path='/Chat' element={<CheckActiveUser activeUser={activeUser}
             element={<ChatDashboard activeUser={activeUser}/>}/>}/>
             <Route path='/Forget' element={<ForgetPass/>}/> 

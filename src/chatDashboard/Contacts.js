@@ -6,7 +6,7 @@ import messBiden from "./messegesLists";
 import messBush from "./messBush";
 
 const Contacts = [
-{
+    {
         pic: bush,
         name: "Bush",
         time: "11:49",

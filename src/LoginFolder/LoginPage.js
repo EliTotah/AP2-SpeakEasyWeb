@@ -8,7 +8,7 @@ import Users from '../users/Users';
 import { useNavigate } from 'react-router-dom';
 
 
-function LoginPage(props) {
+function LoginPage({setActiveUser}) {
     const navigate = useNavigate();
 
     const [username1, setUsername] = useState('');
@@ -28,13 +28,14 @@ function LoginPage(props) {
             'body': JSON.stringify(data1) // The actual data (username/password)
         });
         // The server's response is a json object
-        const json = await res.text();
+        const token = await res.text();
+        console.log(res.status);
         if (res.status != 200)
             alert('Invalid username and/or password')
         else {
             // Navigate to the ChatDashboard route with name and picture as URL parameters
-            navigate(`/Chat`);
-        
+            setActiveUser(username1);
+            navigate(`/Chat?token=${token}&usern=${username1}`);
         }
 
         /*//const user = Users.find((user) => user.userName === username && user.password === password);
