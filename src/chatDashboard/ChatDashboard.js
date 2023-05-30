@@ -20,7 +20,6 @@ function ChatDashboard({activeUser}) {
 
     const [displayName1, setdisplayName] = useState();
     const [pictureHead, setpictureHead] = useState();
-    const [user, setUser] = useState();
 
     const [contactList, setcontactList] = useState([]);
     const [selectedMessages, setSelectedMessages] = useState([]);
@@ -28,20 +27,12 @@ function ChatDashboard({activeUser}) {
     const [picChatter, setpicChatter] = useState();
     const [nameChatter, setnameChatter] = useState();
   
-    const [chatIds, setChatIDS] = useState([]);
     const [selecteduser, setselecteduser] = useState();
-
-
 
     // Get the name and picture from the URL parameters
     const token = new URLSearchParams(location.search).get('token');
     const userna = new URLSearchParams(location.search).get('usern');
-
-    var p1="";
-    /*const user = Users.find((user) => user.userName === name1);
-    if(user) {
-        p1 = user.pic;
-    }*/
+    const [selecteduserName, setsselecteduserName] = useState(userna);
 
     useEffect(() => {
         async function fetchUserData() {
@@ -80,6 +71,21 @@ function ChatDashboard({activeUser}) {
         fetchchatsData();
     },[]);
 
+    async function fetchchatsData2() {
+      try {
+        const response = await fetch(`http://localhost:5000/api/Chats`, {
+          'headers': {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token // attach the token
+          },
+        });
+        const data = await response.json();
+        setcontactList(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
 
     const addContact2 = (pic1, name1, time1, unreadmsg1, messages1) => {
         // Update the Contacts array directly
@@ -100,9 +106,6 @@ function ChatDashboard({activeUser}) {
               'body': JSON.stringify(d)
             });
             const data = await response.json();
-            chatIds.push({displayName:data.user.displayName,
-                          idChat:data.id,
-                          picture:data.user.profilePic})
       } catch (error) {
             // Handle network error or other exceptions
             alert("Error");
@@ -112,7 +115,6 @@ function ChatDashboard({activeUser}) {
  const addmessage = async (content1)=>{
         const idChat = selecteduser
         try{
-            console.log(token)
               const response1 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
                 'method': 'post',
                 'headers': {
@@ -130,7 +132,9 @@ function ChatDashboard({activeUser}) {
                     },
                 });
                 const data = await response2.json();
-                setSelectedMessages(data);
+                const sortedData = [...data].sort((a, b) => a.id - b.id);
+                setSelectedMessages(sortedData);
+                fetchchatsData2();
         } catch (error) {
           // Handle network error or other exceptions
           alert("Error");
@@ -146,8 +150,20 @@ function ChatDashboard({activeUser}) {
       };
 
     
-    const doSearch = function(q) {
-        setcontactList(Contacts.filter((contact) => contact.name.includes(q)));
+    const doSearch = async function(q) {
+        try {
+            const response = await fetch(`http://localhost:5000/api/Chats`, {
+              'headers': {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token // attach the token
+              },
+            });
+            const data = await response.json();
+            const filteredData = data.filter(contact => contact.user.displayName.startsWith(q));
+            setcontactList(filteredData);
+        } catch (error) {
+            console.error('Error:', error);
+          }
     }
 
     // const handleContactClick  = async (contact) => {
@@ -156,8 +172,7 @@ function ChatDashboard({activeUser}) {
     //     setnameChatter(contact.name);
     // };
 
-    const handleContactClick2 = async (contact) => {
-        const user = chatIds.find((user) => user.displayName === contact.user.displayName);
+    const handleContactClick = async (contact) => {
         const idChat = contact.id;
         try {
             const response = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
@@ -167,7 +182,8 @@ function ChatDashboard({activeUser}) {
                 },
             });
             const data = await response.json();
-            setSelectedMessages(data);
+            const sortedData = [...data].sort((a, b) => a.id - b.id);
+            setSelectedMessages(sortedData);
             setpicChatter(contact.user.profilePic);
             setnameChatter(contact.user.displayName);
             setselecteduser(contact.id);
@@ -184,13 +200,13 @@ function ChatDashboard({activeUser}) {
                 <HeaderProfile addCon={addContact}  name1={displayName1} pic1={pictureHead}/> 
                 <SearchBox doSearch={doSearch}/>
                 <div className="contacts" >
-                    <ContactListResults contacts={contactList} onContactClick={handleContactClick2}/>
+                    <ContactListResults contacts={contactList} onContactClick={handleContactClick}/>
                 </div>
             </div>
             <div className="right-container">
                 <HeaderChatter name={nameChatter} pic={picChatter}/>
                 <div className="chat-container"> 
-                    <ChatListResults messList1={selectedMessages} /> 
+                    <ChatListResults messList1={selectedMessages} username1 ={selecteduserName}/> 
                 </div>  
                 <SendBox addMess={addmessage}/> 
             </div>    
