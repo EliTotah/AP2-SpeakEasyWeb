@@ -5,6 +5,7 @@ function ContactListResults({ contacts, onContactClick }) {
 
     const conList = contacts.map((contact,key)=>{
         return <ContactList contact={contact} key={key} onClick={() => onContactClick(contact)}/>
+
     });
 
     return (

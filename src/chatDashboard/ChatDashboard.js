@@ -27,7 +27,7 @@ function ChatDashboard({activeUser}) {
 
     const [picChatter, setpicChatter] = useState();
     const [nameChatter, setnameChatter] = useState();
-
+  
     const [chatIds, setChatIDS] = useState([]);
     const [selecteduser, setselecteduser] = useState();
 
@@ -42,6 +42,7 @@ function ChatDashboard({activeUser}) {
     if(user) {
         p1 = user.pic;
     }*/
+
     useEffect(() => {
         async function fetchUserData() {
           try {
@@ -108,23 +109,52 @@ function ChatDashboard({activeUser}) {
   }
 };
 
-    const addmessage = (content1, time1, classtype1) => {
+ const addmessage = async (content1)=>{
+        const idChat = selecteduser
+        try{
+            console.log(token)
+              const response1 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
+                'method': 'post',
+                'headers': {
+                  'authorization': 'Bearer ' + token,
+                  'Content-Type': 'application/json',
+                },
+                'body': JSON.stringify({
+                  msg: content1
+                })
+              });
+                const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
+                    'headers': {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token // attach the token
+                    },
+                });
+                const data = await response2.json();
+                setSelectedMessages(data);
+        } catch (error) {
+          // Handle network error or other exceptions
+          alert("Error");
+          }
+    };
+
+    const addmessage2 = (content1, time1, classtype1) => {
         // Update the Contacts array directly
         const newMessage = {content:content1, time:time1, classtype:classtype1};
         selectedMessages.push(newMessage);
         const mess = [...selectedMessages];
         setSelectedMessages(mess);
       };
+
     
     const doSearch = function(q) {
         setcontactList(Contacts.filter((contact) => contact.name.includes(q)));
     }
 
-    const handleContactClick = (contact) => {
-        setSelectedMessages(contact.messages);
-        setpicChatter(contact.pic);
-        setnameChatter(contact.name);
-    };
+    // const handleContactClick  = async (contact) => {
+    //     setSelectedMessages(contact.messages);
+    //     setpicChatter(contact.pic);
+    //     setnameChatter(contact.name);
+    // };
 
     const handleContactClick2 = async (contact) => {
         const user = chatIds.find((user) => user.displayName === contact.user.displayName);
