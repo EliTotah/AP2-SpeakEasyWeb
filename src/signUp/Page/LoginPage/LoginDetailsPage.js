@@ -114,10 +114,10 @@ const LoginDetailsPage = ({ addUser30, userName1, name1, pic1, onPrev, setActive
       //addUser30(name, pass, username, pic);
       navigate("/");
     } 
-      if(response.status == 409){
+      if(response.status === 409){
         alert("This username already exists in the system, try another name.");
       }
-      else {
+      else if (response.status !== 200) {
       // Handle error response from the server
       setError("Error during signup");
     }
