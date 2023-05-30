@@ -1,30 +1,31 @@
-import photo from "../img/bush.jpg"
 import './ContactList.css'
 
-function ContactList({contact, onClick}) {
-    const c1 = contact.json();
-    const data = JSON.parse(c1);
+function ContactList({ contact, onClick }) {
 
     return (
         <div className="chat-list" onClick={onClick}>
             <div className="chat-box">
                 <div className="img-box">
-                <img className="img-cover" src={data[0].user.profilePic} alt=""/>
+                    <img className="img-cover" src={contact.user.profilePic} alt="" />
                 </div>
                 <div className="chat-details">
                     <div className="text-head">
-                    <h4>{data[0].user.displayName}</h4>
-                    <p className="time unread">{data[0].lastMessage.created}</p>
+                        <h4>{contact.user.displayName}</h4>
+                        {contact.lastMessage ? (
+                            <p className="time unread">{contact.lastMessage.created}</p>
+                        ) : null}
                     </div>
                     <div className="text-message">
-                        <p>{data[0].lastMessage.content}</p>
+                    {contact.lastMessage ? (
+                    <p>{contact.lastMessage.content}</p>
+                    ) : null}
                         {0 ? (
-                         <b className="unread-count">{null}</b>
+                            <b className="unread-count">{null}</b>
                         ) : null}
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
     );
 }
 

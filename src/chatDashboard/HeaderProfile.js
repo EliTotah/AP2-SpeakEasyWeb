@@ -13,7 +13,7 @@ function HeaderProfile( {addCon, name1, pic1} ) {
         const unreadmsg = "";
         const messages = [];
         const pic = `https://randomuser.me/api/portraits/${Math.random() < 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 100)}.jpg`
-        addCon(pic,name,time,unreadmsg,messages);
+        addCon(name);
         
         document.getElementById("Modal").classList.remove("show");
         document.getElementById("Modal").setAttribute("aria-hidden", "true");
@@ -33,7 +33,7 @@ function HeaderProfile( {addCon, name1, pic1} ) {
              <li><i className="bi bi-person-plus-fill"></i></li>
             </a> 
 
-                  <div className="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="false">
+                  <div className="modal fade" id="Modal" tabIndex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="false">
                     <div className="modal-dialog" role="document">
                       <div className="modal-content">
                         <div className="modal-header">
