@@ -1,6 +1,6 @@
 import './ChatList.css'
 
-function ChatLists({messages}) {
+function ChatLists({messages,username}) {
     const date = new Date( messages.created);
     const year = date.getFullYear();
 
@@ -12,9 +12,10 @@ function ChatLists({messages}) {
 
     const formattedDate = `${day}/${month}/${year}`;
     const formattedTime = `${hours}:${minutes}`;
-    return (
-        <div className="message-box friend-message">
-            <p> {messages.content} <br/> <span>  {formattedTime} {formattedDate} </span></p>
+    const classtype = messages.sender.username === username ? 'message-box my-message' : 'message-box friend-message';
+  return (
+        <div className={classtype}>
+        <p> {messages.content} <br/> <span>  {formattedTime} {formattedDate} </span></p>
         </div> 
     );
 }
