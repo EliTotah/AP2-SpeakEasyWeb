@@ -29,8 +29,11 @@ function LoginPage({setActiveUser}) {
         });
         // The server's response is a json object
         const token = await res.text();
-        if (res.status != 200)
-            alert('Invalid username and/or password')
+        if (res.status == 404)
+            alert('The login information you entered is incorrect')
+        else if (res.status != 200){
+            alert('Error in login')
+        }
         else {
             // Navigate to the ChatDashboard route with name and picture as URL parameters
             setActiveUser(username1);
