@@ -44,13 +44,13 @@ function ChatDashboard({activeUser}) {
               },
             });
             if (response.status != 200){
-                alert('Error')
+                throw new Error('Error')
             }
             const data = await response.json();
             setpictureHead(data.profilePic);
             setdisplayName(data.displayName);
           } catch (error) {
-            console.error('Error:', error);
+            alert(error);
           }
         }
     
@@ -63,12 +63,12 @@ function ChatDashboard({activeUser}) {
               },
             });
             if (response.status != 200){
-                alert('Error')
+                throw new Error('Error')
             }
             const data = await response.json();
             setcontactList(data);
           } catch (error) {
-            console.error('Error:', error);
+            alert(error);
           }
         }
     
@@ -85,10 +85,13 @@ function ChatDashboard({activeUser}) {
             'Authorization': 'Bearer ' + token // attach the token
           },
         });
+        if (response.status != 200){
+            throw new Error('Error')
+        }
         const data = await response.json();
         setcontactList(data);
       } catch (error) {
-        console.error('Error:', error);
+        alert(error);
       }
     }
 
@@ -112,12 +115,12 @@ function ChatDashboard({activeUser}) {
               'body': JSON.stringify(d)
             });
             if (response.status != 200){
-                alert('The user you requested does not exist in the system')
+                throw new Error('The user you requested does not exist in the system')
             }
             const data = await response.json();
       } catch (error) {
             // Handle network error or other exceptions
-            alert("Error");
+            alert(error);
   }
 };
 
@@ -136,7 +139,7 @@ function ChatDashboard({activeUser}) {
                 
               });
               if (response1.status != 200){
-                alert('Error in send message')
+                throw new Error('Error in send message');
             }
                 const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
                     'headers': {
@@ -145,7 +148,7 @@ function ChatDashboard({activeUser}) {
                     },
                 });
                 if (response2.status != 200){
-                    alert('Error')
+                    throw new Error('Error');
                 }
                 const data = await response2.json();
                 const sortedData = [...data].sort((a, b) => a.id - b.id);
@@ -153,7 +156,7 @@ function ChatDashboard({activeUser}) {
                 fetchchatsData2();
         } catch (error) {
           // Handle network error or other exceptions
-          alert("Error");
+          alert(error);
           }
     };
 
@@ -174,19 +177,22 @@ function ChatDashboard({activeUser}) {
                 'Authorization': 'Bearer ' + token // attach the token
               },
             });
+            if (response.status != 200){
+                throw new Error('Error');
+            }
             const data = await response.json();
             const filteredData = data.filter(contact => contact.user.displayName.startsWith(q));
             setcontactList(filteredData);
         } catch (error) {
-            console.error('Error:', error);
+            alert(error);
           }
     }
 
-    const handleContactClick  = async (contact) => {
-        setSelectedMessages(contact.messages);
-        setpicChatter(contact.pic);
-        setnameChatter(contact.name);
-    };
+    // const handleContactClick  = async (contact) => {
+    //     setSelectedMessages(contact.messages);
+    //     setpicChatter(contact.pic);
+    //     setnameChatter(contact.name);
+    // };
 
     const handleContactClick = async (contact) => {
         const idChat = contact.id;
@@ -198,7 +204,7 @@ function ChatDashboard({activeUser}) {
                 },
             });
             if (response.status != 200){
-                alert('Error opening the conversation')
+                throw new Error('Error');
             }
             const data = await response.json();
             const sortedData = [...data].sort((a, b) => a.id - b.id);
@@ -207,7 +213,7 @@ function ChatDashboard({activeUser}) {
             setnameChatter(contact.user.displayName);
             setselecteduser(contact.id);
             } catch (error) {
-                console.error('Error:', error);
+                alert(error);
             }
     };
 
