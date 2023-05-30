@@ -37,7 +37,7 @@ function ChatDashboard({activeUser}) {
     const token = new URLSearchParams(location.search).get('token');
     const userna = new URLSearchParams(location.search).get('usern');
 
-    var p1="";
+    
     /*const user = Users.find((user) => user.userName === name1);
     if(user) {
         p1 = user.pic;
@@ -121,7 +121,6 @@ function ChatDashboard({activeUser}) {
  const addmessage = async (content1)=>{
         const idChat = selecteduser
         try{
-            console.log(token)
               const response1 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
                 'method': 'post',
                 'headers': {
@@ -166,11 +165,11 @@ function ChatDashboard({activeUser}) {
         setcontactList(Contacts.filter((contact) => contact.name.includes(q)));
     }
 
-    // const handleContactClick  = async (contact) => {
-    //     setSelectedMessages(contact.messages);
-    //     setpicChatter(contact.pic);
-    //     setnameChatter(contact.name);
-    // };
+    const handleContactClick  = async (contact) => {
+        setSelectedMessages(contact.messages);
+        setpicChatter(contact.pic);
+        setnameChatter(contact.name);
+    };
 
     const handleContactClick2 = async (contact) => {
         const user = chatIds.find((user) => user.displayName === contact.user.displayName);
