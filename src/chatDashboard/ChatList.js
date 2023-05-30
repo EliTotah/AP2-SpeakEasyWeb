@@ -1,10 +1,9 @@
 import './ChatList.css'
 
-function ChatLists({content, time, classtype}) {
+function ChatLists({messages}) {
     return (
-
-        <div className={classtype}>
-            <p> {content} <br/> <span> {time} </span></p>
+        <div className="message-box friend-message">
+            <p> {messages.content} <br/> <span> {messages.created} </span></p>
         </div> 
     );
 }

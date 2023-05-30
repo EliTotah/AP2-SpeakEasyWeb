@@ -10,7 +10,6 @@ function CheckActiveUser({element, activeUser}){
   const navi= useNavigate();
   useEffect(() =>{
     if(!activeUser){
-      console.log("is activ");
       navi('/');
     }
   }, [activeUser, navi]);
