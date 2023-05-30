@@ -8,7 +8,7 @@ import Users from '../users/Users';
 import { useNavigate } from 'react-router-dom';
 
 
-function LoginPage({setActiveUser}) {
+function LoginPage({ setActiveUser }) {
     const navigate = useNavigate();
 
     const [username1, setUsername] = useState('');
@@ -20,24 +20,28 @@ function LoginPage({setActiveUser}) {
             username: username1,
             password: password1
         }
-        const res = await fetch('http://localhost:5000/api/Tokens', {
-            'method': 'post', // send a post request
-            'headers': {
-                'Content-Type': 'application/json', // the data (username/password) is in the form of a JSON object
-            },
-            'body': JSON.stringify(data1) // The actual data (username/password)
-        });
-        // The server's response is a json object
-        const token = await res.text();
-        if (res.status == 404)
-            alert('The login information you entered is incorrect')
-        else if (res.status != 200){
-            alert('Error in login')
-        }
-        else {
-            // Navigate to the ChatDashboard route with name and picture as URL parameters
-            setActiveUser(username1);
-            navigate(`/Chat?token=${token}&usern=${username1}`);
+        try {
+            const res = await fetch('http://localhost:5000/api/Tokens', {
+                'method': 'post', // send a post request
+                'headers': {
+                    'Content-Type': 'application/json', // the data (username/password) is in the form of a JSON object
+                },
+                'body': JSON.stringify(data1) // The actual data (username/password)
+            });
+            // The server's response is a json object
+            const token = await res.text();
+            if (res.status == 404)
+                throw new Error('The login information you entered is incorrect')
+            else if (res.status != 200) {
+                throw new Error('Error in login')
+            }
+            else {
+                // Navigate to the ChatDashboard route with name and picture as URL parameters
+                setActiveUser(username1);
+                navigate(`/Chat?token=${token}&usern=${username1}`);
+            }
+        } catch (error) {
+            alert(error);
         }
 
         /*//const user = Users.find((user) => user.userName === username && user.password === password);
@@ -63,14 +67,14 @@ function LoginPage({setActiveUser}) {
 
     return (
         <div className='page'>
-        <div className="big">
-            <img id="logo" src={logo}/> 
-            <form name="form1" className="box" onSubmit={handleSubmit}>
-                <Header/>
-                <InputFields handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} />
-                <Buttons/>
-            </form>   
-        </div> 
+            <div className="big">
+                <img id="logo" src={logo} />
+                <form name="form1" className="box" onSubmit={handleSubmit}>
+                    <Header />
+                    <InputFields handleUsernameChange={handleUsernameChange} handlePasswordChange={handlePasswordChange} />
+                    <Buttons />
+                </form>
+            </div>
         </div>
     )
 };

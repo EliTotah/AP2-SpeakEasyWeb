@@ -115,15 +115,15 @@ const LoginDetailsPage = ({ addUser30, userName1, name1, pic1, onPrev, setActive
       navigate("/");
     } 
       if(response.status === 409){
-        alert("This username already exists in the system, try another name.");
+        throw new Error("This username already exists in the system, try another name.");
       }
       else if (response.status !== 200) {
       // Handle error response from the server
-      setError("Error during signup");
+      throw new Error("Error during signup");
     }
   } catch (error) {
     // Handle network error or other exceptions
-    setError("Error occurred during signup");
+    alert(error);
     }
   }
 };
