@@ -32,7 +32,7 @@ function ChatDashboard({activeUser}) {
     // Get the name and picture from the URL parameters
     const token = new URLSearchParams(location.search).get('token');
     const userna = new URLSearchParams(location.search).get('usern');
-    const [selecteduserName, setsselecteduserName] = useState(userna);
+    const [selecteduserName, setsselecteduserName] = useState(userna)
 
     useEffect(() => {
         async function fetchUserData() {
@@ -43,6 +43,9 @@ function ChatDashboard({activeUser}) {
                 'Authorization': 'Bearer ' + token // attach the token
               },
             });
+            if (response.status != 200){
+                alert('Error')
+            }
             const data = await response.json();
             setpictureHead(data.profilePic);
             setdisplayName(data.displayName);
@@ -59,6 +62,9 @@ function ChatDashboard({activeUser}) {
                 'Authorization': 'Bearer ' + token // attach the token
               },
             });
+            if (response.status != 200){
+                alert('Error')
+            }
             const data = await response.json();
             setcontactList(data);
           } catch (error) {
@@ -105,6 +111,9 @@ function ChatDashboard({activeUser}) {
               },
               'body': JSON.stringify(d)
             });
+            if (response.status != 200){
+                alert('The user you requested does not exist in the system')
+            }
             const data = await response.json();
       } catch (error) {
             // Handle network error or other exceptions
@@ -124,13 +133,20 @@ function ChatDashboard({activeUser}) {
                 'body': JSON.stringify({
                   msg: content1
                 })
+                
               });
+              if (response1.status != 200){
+                alert('Error in send message')
+            }
                 const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
                     'headers': {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token // attach the token
                     },
                 });
+                if (response2.status != 200){
+                    alert('Error')
+                }
                 const data = await response2.json();
                 const sortedData = [...data].sort((a, b) => a.id - b.id);
                 setSelectedMessages(sortedData);
@@ -166,11 +182,11 @@ function ChatDashboard({activeUser}) {
           }
     }
 
-    // const handleContactClick  = async (contact) => {
-    //     setSelectedMessages(contact.messages);
-    //     setpicChatter(contact.pic);
-    //     setnameChatter(contact.name);
-    // };
+    const handleContactClick  = async (contact) => {
+        setSelectedMessages(contact.messages);
+        setpicChatter(contact.pic);
+        setnameChatter(contact.name);
+    };
 
     const handleContactClick = async (contact) => {
         const idChat = contact.id;
@@ -181,6 +197,9 @@ function ChatDashboard({activeUser}) {
                 'Authorization': 'Bearer ' + token // attach the token
                 },
             });
+            if (response.status != 200){
+                alert('Error opening the conversation')
+            }
             const data = await response.json();
             const sortedData = [...data].sort((a, b) => a.id - b.id);
             setSelectedMessages(sortedData);
