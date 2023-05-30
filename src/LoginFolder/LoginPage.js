@@ -29,7 +29,6 @@ function LoginPage({setActiveUser}) {
         });
         // The server's response is a json object
         const token = await res.text();
-        console.log(res.status);
         if (res.status != 200)
             alert('Invalid username and/or password')
         else {

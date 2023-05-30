@@ -1,4 +1,3 @@
-import photo from "../img/bush.jpg"
 import './ContactList.css'
 
 function ContactList({ contact, onClick }) {

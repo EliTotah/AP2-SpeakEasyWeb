@@ -33,7 +33,7 @@ function HeaderProfile( {addCon, name1, pic1} ) {
              <li><i className="bi bi-person-plus-fill"></i></li>
             </a> 
 
-                  <div className="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="false">
+                  <div className="modal fade" id="Modal" tabIndex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop="false">
                     <div className="modal-dialog" role="document">
                       <div className="modal-content">
                         <div className="modal-header">
