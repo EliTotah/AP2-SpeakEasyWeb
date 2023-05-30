@@ -23,7 +23,9 @@ function ChatDashboard({activeUser}) {
     const [user, setUser] = useState();
 
     const [contactList, setcontactList] = useState([]);
-    const [selectedMessages, setSelectedMessages] = useState(messList);
+    const [selectedMessages, setSelectedMessages] = useState([]);
+    const [chatIds, setChatIDS] = useState([]);
+    const [selecteduser, setselecteduser] = useState();
 
     const [picChatter, setpicChatter] = useState(biden);
     const [nameChatter, setnameChatter] = useState("Biden");
@@ -38,68 +40,126 @@ function ChatDashboard({activeUser}) {
     if(user) {
         p1 = user.pic;
     }*/
+
+
+  useEffect(() => {
     async function fetchUserData() {
-        try {
-            const response = await fetch(`http://localhost:5000/api/Users/${userna}`, {
-                'headers': {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token // attach the token
-                },
-            });
-            const data = await response.json();
-            setpictureHead(data.profilePic);
-            setdisplayName(data.displayName);
-            } catch (error) {
-                console.error('Error:', error);
-            }
+      try {
+        const response = await fetch(`http://localhost:5000/api/Users/${userna}`, {
+          'headers': {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token // attach the token
+          },
+        });
+        const data = await response.json();
+        setpictureHead(data.profilePic);
+        setdisplayName(data.displayName);
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
 
     async function fetchchatsData() {
-        try {
-            const response = await fetch(`http://localhost:5000/api/Chats`, {
-                'headers': {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token // attach the token
-                },
-            });
-            const data = await response.json();
-            setcontactList(data);
-            
-            } catch (error) {
-                console.error('Error:', error);
-            }
+      try {
+        const response = await fetch(`http://localhost:5000/api/Chats`, {
+          'headers': {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token // attach the token
+          },
+        });
+        const data = await response.json();
+        setcontactList(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
 
-        fetchUserData();
-        fetchchatsData();
+    // Call the functions
+    fetchUserData();
+    fetchchatsData();
+  }, []); // Empty dependency array means the effect runs only once, similar to componentDidMount
 
 
+      const addContact = async (name1) => {
+          //Update the Contacts array directly
+          try{
+            console.log(name1)
+            console.log(token)
+              const response = await fetch(`http://localhost:5000/api/Chats`, {
+                'method': 'post',
+                'headers': {
+                  'authorization': 'Bearer ' + token,
+                  'Content-Type': 'application/json',
+                },
+                'body': JSON.stringify({
+                  username: name1
+                })
+              });
+              const data = await response.json();
+              chatIds.push({displayName:data.user.displayName,
+                idChat:data.id,
+                picture:data.user.profilePic})
+        } catch (error) {
+          // Handle network error or other exceptions
+          alert("Error");
+          }
+      };    
 
-    const addContact = (pic1, name1, time1, unreadmsg1, messages1) => {
-        // Update the Contacts array directly
-        const newContact = {pic:pic1, name:name1, time:time1, unreadmsg:unreadmsg1,messages:messages1};
-        setcontactList((prevContacts) => [...prevContacts, newContact]);
+    // const addContact = (pic1, name1, time1, unreadmsg1, messages1) => {
+    //     // Update the Contacts array directly
+    //     const newContact = {pic:pic1, name:name1, time:time1, unreadmsg:unreadmsg1,messages:messages1};
+    //     setcontactList((prevContacts) => [...prevContacts, newContact]);
+    // };
+
+    // const addmessage = (content1, time1, classtype1) => {
+    //     // Update the Contacts array directly
+    //     const newMessage = {content:content1, time:time1, classtype:classtype1};
+    //     selectedMessages.push(newMessage);
+    //     const mess = [...selectedMessages];
+    //     setSelectedMessages(mess);
+    //   };
+
+    const addmessage = async (content1)=>{
+        const idChat = selecteduser
+        try{
+            console.log(token)
+              const response1 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
+                'method': 'post',
+                'headers': {
+                  'authorization': 'Bearer ' + token,
+                  'Content-Type': 'application/json',
+                },
+                'body': JSON.stringify({
+                  msg: content1
+                })
+              });
+                const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
+                    'headers': {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token // attach the token
+                    },
+                });
+                const data = await response2.json();
+                setSelectedMessages(data);
+        } catch (error) {
+          // Handle network error or other exceptions
+          alert("Error");
+          }
     };
-
-    const addmessage = (content1, time1, classtype1) => {
-        // Update the Contacts array directly
-        const newMessage = {content:content1, time:time1, classtype:classtype1};
-        selectedMessages.push(newMessage);
-        const mess = [...selectedMessages];
-        setSelectedMessages(mess);
-      };
     
     const doSearch = function(q) {
         setcontactList(Contacts.filter((contact) => contact.name.includes(q)));
     }
 
-    const handleContactClick = (contact) => {
-        setSelectedMessages(contact.messages);
-        setpicChatter(contact.pic);
-        setnameChatter(contact.name);
-    };
+    // const handleContactClick  = async (contact) => {
+    //     setSelectedMessages(contact.messages);
+    //     setpicChatter(contact.pic);
+    //     setnameChatter(contact.name);
+    // };
 
-    /*const handleContactClick2 = async (contact) => {
+    const handleContactClick = async (contact) => {
+        const idChat = contact.id;
+        console.log(idChat);
         try {
             const response = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
                 'headers': {
@@ -109,14 +169,14 @@ function ChatDashboard({activeUser}) {
             });
             const data = await response.json();
             setSelectedMessages(data);
-
+            setpicChatter(contact.pic);
+            setnameChatter(contact.name);
+            setselecteduser(contact.id);
             } catch (error) {
                 console.error('Error:', error);
-            }
-        setSelectedMessages(contact.messages);
-        setpicChatter(contact.pic);
-        setnameChatter(contact.name);
-    };*/
+    }
+};
+
 
   return (
     <div className="chatPage">
