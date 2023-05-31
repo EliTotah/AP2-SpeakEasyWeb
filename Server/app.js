@@ -1,26 +1,30 @@
-const express = require ('express');
+
+const express = require('express');
 var app = express();
+
 const bodyParser = require ('body-parser');
-const cors = require ('cors');
-const mongoose = require ('mongoose');
-const users =require ('./routes/user.js');
-
-
-const customENV =require ('custom-env');
-customENV.env(process.env.NODE_ENV, './config');
-
-console.log(process.env.CONNECTION_STRING)
-console.log(process.env.PORT)
-
-
-mongoose.connect(process.env.CONNECTION_STRING).then(() => console.log("Connection to database successful."));
-
-app.use(express.static('../Chat-app/build'))
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 
+const cors = require('cors');
+app.use(cors());
 
+const customEnv = require('custom-env');
+customEnv.env(process.env.NODE_ENV, './config');
+
+const mongoose = require('mongoose');
+mongoose.connect(process.env.CONNECTION_STRING + "ChatDB", {
+    useNewURLParser: true,
+    useUnifiedTopology: true
+});
+const users =require ('./routes/user.js');
 app.use('/api/Users', users);
+const token = require('./routes/token');
+app.use('/api/Token',token);
+
+const chat = require('./routes/chat');
+app.use('/api/Chats',chat);
+
+app.use('/',express.static('../ChatApp/build'));
 
 app.listen(process.env.PORT);

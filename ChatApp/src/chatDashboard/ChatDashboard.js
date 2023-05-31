@@ -43,7 +43,9 @@ function ChatDashboard({activeUser}) {
                 'Authorization': 'Bearer ' + token // attach the token
               },
             });
+
             if (response.status !== 200){
+
                 throw new Error('Error')
             }
             const data = await response.json();
@@ -56,13 +58,17 @@ function ChatDashboard({activeUser}) {
     
         async function fetchchatsData() {
           try {
-            const response = await fetch(`http://localhost:27017/api/Chats`, {
+
+            const response = await fetch(`http://localhost:5000/api/Chats`, {
+
               'headers': {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token // attach the token
               },
             });
+
             if (response.status !== 200){
+
                 throw new Error('Error')
             }
             const data = await response.json();
@@ -79,12 +85,15 @@ function ChatDashboard({activeUser}) {
 
     async function fetchchatsData2() {
       try {
-        const response = await fetch(`http://localhost:27017/api/Chats`, {
+
+        const response = await fetch(`http://localhost:5000/api/Chats`, {
+
           'headers': {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token // attach the token
           },
         });
+
         if (response.status !== 200){
             throw new Error('Error')
         }
@@ -106,7 +115,9 @@ function ChatDashboard({activeUser}) {
         //Update the Contacts array directly
         try{
             const d = {username: name1};
-            const response = await fetch(`http://localhost:27017/api/Chats`, {
+
+            const response = await fetch(`http://localhost:5000/api/Chats`, {
+
               'method': 'POST',
               'headers': {
                 'authorization': 'Bearer ' + token,
@@ -114,6 +125,7 @@ function ChatDashboard({activeUser}) {
               },
               'body': JSON.stringify(d)
             });
+
             if (response.status !== 200){
                 throw new Error('The user you requested does not exist in the system')
             }
@@ -127,7 +139,9 @@ function ChatDashboard({activeUser}) {
  const addmessage = async (content1)=>{
         const idChat = selecteduser
         try{
-              const response1 = await fetch(`http://localhost:27017/api/Chats/${idChat}/Messages`, {
+
+              const response1 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
+
                 'method': 'post',
                 'headers': {
                   'authorization': 'Bearer ' + token,
@@ -138,15 +152,18 @@ function ChatDashboard({activeUser}) {
                 })
                 
               });
+
               if (response1.status !== 200){
                 throw new Error('Error in send message');
             }
-                const response2 = await fetch(`http://localhost:27017/api/Chats/${idChat}/Messages`, {
+                const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
+
                     'headers': {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token // attach the token
                     },
                 });
+
                 if (response2.status !== 200){
                     throw new Error('Error');
                 }
@@ -171,12 +188,15 @@ function ChatDashboard({activeUser}) {
     
     const doSearch = async function(q) {
         try {
-            const response = await fetch(`http://localhost:27017/api/Chats`, {
+
+            const response = await fetch(`http://localhost:5000/api/Chats`, {
+
               'headers': {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token // attach the token
               },
             });
+
             if (response.status !== 200){
                 throw new Error('Error');
             }
@@ -197,12 +217,14 @@ function ChatDashboard({activeUser}) {
     const handleContactClick = async (contact) => {
         const idChat = contact.id;
         try {
-            const response = await fetch(`http://localhost:27017/api/Chats/${idChat}/Messages`, {
+            const response = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
+
                 'headers': {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token // attach the token
                 },
             });
+
             if (response.status !== 200){
                 throw new Error('Error');
             }
