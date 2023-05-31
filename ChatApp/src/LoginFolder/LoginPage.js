@@ -30,9 +30,10 @@ function LoginPage({ setActiveUser }) {
             });
             // The server's response is a json object
             const token = await res.text();
-            if (res.status == 404)
+            console.log("the is   " + token);
+            if (res.status === 404)
                 throw new Error('The login information you entered is incorrect')
-            else if (res.status != 200) {
+            else if (res.status !== 200) {
                 throw new Error('Error in login')
             }
             else {

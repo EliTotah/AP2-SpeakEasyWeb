@@ -117,7 +117,7 @@ function ChatDashboard({activeUser}) {
             if (response.status != 200){
                 throw new Error('The user you requested does not exist in the system')
             }
-            const data = await response.json();
+            fetchchatsData2();
       } catch (error) {
             // Handle network error or other exceptions
             alert(error);
