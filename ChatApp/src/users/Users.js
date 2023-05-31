@@ -1,6 +1,5 @@
 
 import eli from "../images/eli.png";
-import ofir from "../images/ofir.png";
 import ProfilePic from "../signUp/profilePic/ProfilePic";
 
 
@@ -20,8 +19,7 @@ const Users = [
         {
             name1: "",
             userName: "Ofir",
-            password: "1234",
-            pic: ofir,
+            pic: eli,
             name:"ofir",
             gender: "Female",
             phoneNumber: "null",

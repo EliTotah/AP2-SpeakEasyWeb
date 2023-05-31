@@ -21,6 +21,7 @@ function LoginPage({ setActiveUser }) {
             password: password1
         }
         try {
+
             const res = await fetch('http://localhost:5000/api/Tokens', {
                 'method': 'post', // send a post request
                 'headers': {
@@ -30,7 +31,6 @@ function LoginPage({ setActiveUser }) {
             });
             // The server's response is a json object
             const token = await res.text();
-            console.log("the is   " + token);
             if (res.status === 404)
                 throw new Error('The login information you entered is incorrect')
             else if (res.status !== 200) {

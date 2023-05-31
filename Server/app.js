@@ -1,4 +1,4 @@
-//import express from 'express';
+
 const express = require('express');
 var app = express();
 
@@ -17,8 +17,8 @@ mongoose.connect(process.env.CONNECTION_STRING + "ChatDB", {
     useNewURLParser: true,
     useUnifiedTopology: true
 });
-
-
+const users =require ('./routes/user.js');
+app.use('/api/Users', users);
 const token = require('./routes/token');
 app.use('/api/Token',token);
 
