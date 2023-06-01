@@ -4,21 +4,16 @@ const Message = require('./message');
 
 const Schema = mongoose.Schema;
 
-const ChatSchema = new Schema({
+const Chat = new Schema({
   id: {
-    type:  Number,
-    required: true
+    type: Number,
   },
   users: {
     type: [User.schema],
-    nullable: true
   },
   messages: {
     type: [Message.schema],
-    nullable: true
   }
 });
 
-const Chat = mongoose.model('Chat', ChatSchema);
-
-module.exports = {Chat};
+module.exports = mongoose.model('Chat', Chat);
