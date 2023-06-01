@@ -11,8 +11,4 @@ router.route('/id')
     .get(chatController.getChat)
     .delete(chatController.deleteChat);
 
-router.route('/id/Messages')
-    .get(chatController.getChat)
-    .post(chatController.deleteChat);
-
 module.exports = router;

@@ -1,11 +1,12 @@
-const userService =require ('../services/user');
+const userService = require ('../services/user');
 
 const createUser = async (req, res) =>{
-    if(!(await userService.createUser(req.body.username, req.body.password, req.body.displayName, req.body.profilePic))){
+    const user = await userService.createUser(req.body.username, req.body.password, req.body.displayName, req.body.profilePic);
+    if(!(user)) {
         res.status(409);
     }
-    else{
-    res.json(await userService.createUser(req.body.username, req.body.password, req.body.displayName, req.body.profilePic))
+    else {
+        res.json(user);
     }
     
 };
@@ -14,11 +15,11 @@ const getAllUsers = async (req, res) => {
 };
 
 const getUserByName = async (req, res) => {
-    if(!(await userService.getUserByName(req.param.username))){
-        res.status(404);
-    }
-    else{
-    res.json(await userService.getUserByName(req.param.username));
+    const user = await userService.getUserByName(req.param.username);
+    if (!user) {
+        res.status(404).json({ error: 'User not found' });
+    } else {
+        res.status(200).json(user);
     }
 };
 

@@ -1,6 +1,5 @@
 const User = require ('../models/user');
 
-
 const createUser = async (username, password, displayName, profilePic)=>{
     const users = await getAllUsers();
     const user = users.find((user) => user.username === username);      
@@ -18,9 +17,11 @@ const createUser = async (username, password, displayName, profilePic)=>{
 const getAllUsers = async () => { return await User.find({}); };
 
 const getUserByName = async (username) => {
-    const user =  await User.findOne({username});
-    if(user){
-    return user
+    const users = getAllUsers();
+    const user = users.find((user) => user.userName === username);      
+    //const user = await User.find({username});
+    if (user) {
+        return user
     }
     else{
         return null;

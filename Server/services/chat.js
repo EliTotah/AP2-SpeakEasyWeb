@@ -1,10 +1,13 @@
 const Chat = require('../models/chat');
+const User = require('../models/user');
+const chatService = require('../services/chat')
 
 const createChat = async (username1) => {
-    //const users = getallusers();
-    //const user = users.find((user) => user.userName === req.body.username && user.password === req.body.password);      
+    //const users = chatService.getAllUsers();
+    //const user = users.find((user) => user.userName === username); 
+    const user = User.find({username1});
     if (user) {
-        const user = {username:username1, displayName:displayName1, profilePic:profilePic1};
+        const user1 = {username:username1, displayName:displayName1, profilePic:profilePic1};
         const last = {lastMessage:IDlastMessage1, created:created1, content:content1};
         const chat = new Chat({ id:id1,user:user,lastMessage:last });
         if (last.lastMessage == NULL) 
