@@ -13,25 +13,21 @@ const chat = new Schema ({
         },
         displayName: {
           type: String,
-          required: true
+          //required: true
         },
         profilePic: {
           type: String,
-          required: true
         }
       },
       lastMessage: {
         id: {
           type: Number,
-          required: true
         },
         created: {
           type: Date,
-          required: true
         },
         content: {
           type: String,
-          required: true
         }
       }
     });
