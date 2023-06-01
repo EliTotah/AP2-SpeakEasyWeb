@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const createChat = async (username1) => {
     const user = await User.findOne({username : username1});
     if (user) {
-        const user1 = {username:username1, displayName:user.displayName, profilePic:user.profilePic};
+        const user1 = {username:user.username, displayName:user.displayName, profilePic:user.profilePic};
         const last = {id:null, created:null, content:null};
         const chat = new Chat({ id:0,user:user1,lastMessage:last });
         return await chat.save();
@@ -24,8 +24,9 @@ const getChats = async (token) => {
             return [];
         }
         else{
-            const chats = await Chat.find({'user.username' : data.username});
-            return chats;
+            const chats = await Chat.find({'users.username' : data.username});
+            const newcha = await chats.users.find({'users.username' : { $ne:data.username}});
+            return newcha;
         }
     } catch (error) {
         // Handle error if the query fails
