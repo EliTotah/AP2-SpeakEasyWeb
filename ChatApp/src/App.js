@@ -20,15 +20,16 @@ function CheckActiveUser({element, activeUser}){
 function App() {
 
 const [activeUser , setActiveUser] = useState("");
+const [token, setToken] = useState("");
 
   return (
     <div>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<LoginPage setActiveUser={setActiveUser}/>}/>
+            <Route path='/' element={<LoginPage setActiveUser={setActiveUser} setToken={setToken}/>}/>
             <Route path='/SignUp' element={<SignupForm/>}/>
             <Route path='/Chat' element={<CheckActiveUser activeUser={activeUser}
-            element={<ChatDashboard activeUser={activeUser}/>}/>}/>
+            element={<ChatDashboard activeUser={activeUser} token={token}/>}/>}/>
             <Route path='/Forget' element={<ForgetPass/>}/> 
           </Routes>
         </BrowserRouter> 
@@ -36,4 +37,4 @@ const [activeUser , setActiveUser] = useState("");
   );
 }
 
-export default App;
+export default App;
