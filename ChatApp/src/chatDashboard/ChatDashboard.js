@@ -43,9 +43,9 @@ function ChatDashboard({activeUser}) {
                 'Authorization': 'Bearer ' + token // attach the token
               },
             });
-
+            console.log(response);
+            console.log(response.status);
             if (response.status !== 200){
-
                 throw new Error('Error')
             }
             const data = await response.json();

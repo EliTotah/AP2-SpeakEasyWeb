@@ -1,22 +1,29 @@
-const tokenService1 = require('../services/token');
+//const { model } = require('mongoose');
+const tokenService = require('../services/token');
+const userService = require('../services/user')
 
 function index(req, res) {
     res.json({ data: 'secret data' });
   }  
 
-  function processLogin(req, res) {
-    //const users = getallusers();
-    //const user = users.find((user) => user.userName === req.body.username && user.password === req.body.password);      
-    if(req.body.username === 'e1' && req.body.password === 'Haim10@') {
-    //if (user) {
-        const data = { username: req.body.username};
-        const token = model.tokenService1.generateToken(data);
-        res.status(200).json({ token });
-    }
-    else {
+async function processLogin(req, res) {
+  try {
+    const users = await userService.getAllUsers();
+    const user = users.find((user) => user.username === req.body.username && user.password === req.body.password);
+
+    if (user) {
+      const data = { username: req.body.username, password: req.body.password };
+      const token = tokenService.generateToken(data);
+      res.status(200).json({ token });
+    } else {
       res.status(404).send('Invalid username and/or password');
     }
+  } catch (error) {
+    console.error('Error retrieving users:', error);
+    res.status(500).send('Internal Server Error');
   }
+}
+
   
   module.exports = {
     index,

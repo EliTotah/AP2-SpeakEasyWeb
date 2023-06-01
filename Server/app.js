@@ -17,10 +17,12 @@ mongoose.connect(process.env.CONNECTION_STRING + "ChatDB", {
     useNewURLParser: true,
     useUnifiedTopology: true
 });
-const users =require ('./routes/user.js');
+
+const users =require ('./routes/user');
 app.use('/api/Users', users);
+
 const token = require('./routes/token');
-app.use('/api/Token',token);
+app.use('/api/Tokens',token);
 
 const chat = require('./routes/chat');
 app.use('/api/Chats',chat);
