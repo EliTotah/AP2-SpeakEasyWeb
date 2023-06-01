@@ -1,35 +1,24 @@
 const mongoose = require('mongoose');
+const User = require('./user');
+const Message = require('./message');
 
 const Schema = mongoose.Schema;
-const chat = new Schema ({
-    id: {
-        type: Number,
-        required: true
-      },
-      user: {
-        username: {
-          type: String,
-          required: true
-        },
-        displayName: {
-          type: String,
-          //required: true
-        },
-        profilePic: {
-          type: String,
-        }
-      },
-      lastMessage: {
-        id: {
-          type: Number,
-        },
-        created: {
-          type: Date,
-        },
-        content: {
-          type: String,
-        }
-      }
-    });
 
-module.exports = mongoose.model('chat',chat);
+const ChatSchema = new Schema({
+  id: {
+    type:  Number,
+    required: true
+  },
+  users: {
+    type: [User.schema],
+    nullable: true
+  },
+  messages: {
+    type: [Message.schema],
+    nullable: true
+  }
+});
+
+const Chat = mongoose.model('Chat', ChatSchema);
+
+module.exports = {Chat};

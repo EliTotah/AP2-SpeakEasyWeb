@@ -1,5 +1,6 @@
 const chatService = require('../services/chat');
 const userService = require('../services/user');
+const User = require('../models/user');
 
 
 const createChat = async (req, res) => {
@@ -10,16 +11,11 @@ const createChat = async (req, res) => {
             if (!result) {
                 return res.status(404).json("no user Found");
             } else {
-                const newChat = await chatService.createChat(result.username);
-                const x = {id: newChat.id, user:{
-                                            username: newChat.user.username, 
-                                            displayName: newChat.user.displayName, 
-                                            profilePic: newChat.user.profilePic}
-                };
-                return res.json(x);
+                const newChat = await chatService.createChat(result.username, req.body.username);
+                return res.json(newChat);
             }
         } else{
-        }
+            }
 };
 
 const getChats = async (req, res) => {

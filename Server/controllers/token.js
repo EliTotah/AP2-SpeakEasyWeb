@@ -8,7 +8,7 @@ function index(req, res) {
 
 async function processLogin(req, res) {
   try {
-    const users = await userService.getAllUsers();
+    const users = await userService.getAllUsersPassName();
     const user = users.find((user) => user.username === req.body.username && user.password === req.body.password);
 
     if (user) {

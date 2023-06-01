@@ -1,25 +1,30 @@
 const mongoose = require('mongoose');
+const UserSchema = require('./user')
 
 const Schema = mongoose.Schema;
+
 const message = new Schema ({
     id: {
         type: Number,
-        required: true
+        nullable: true 
       },
-      created: {
+    created: {
         type: Date,
-        required: true
-      },
-      sender: {
-        username: {
-          type: String,
-          required: true
-        }
-      },
-      content: {
+        nullable: true 
+    },
+    sender: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        nullable: true 
+    },
+    content: {
         type: String,
-        required: true
-      }
+        nullable: true 
+    }
     });
 
-module.exports = mongoose.model('message',message);
+const Message1 = mongoose.model('Message', message);
+
+module.exports = {
+  Message1,
+};

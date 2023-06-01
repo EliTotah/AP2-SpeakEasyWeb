@@ -84,7 +84,6 @@ function ChatDashboard({activeUser}) {
       try {
 
         const response = await fetch(`http://localhost:5000/api/Chats`, {
-
           'headers': {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token // attach the token
@@ -112,9 +111,7 @@ function ChatDashboard({activeUser}) {
         //Update the Contacts array directly
         try{
             const d = {username: name1};
-
             const response = await fetch(`http://localhost:5000/api/Chats`, {
-
               'method': 'POST',
               'headers': {
                 'authorization': 'Bearer ' + token,
@@ -126,7 +123,7 @@ function ChatDashboard({activeUser}) {
             if (response.status !== 200){
                 throw new Error('The user you requested does not exist in the system')
             }
-            const data = await response.json();
+            fetchchatsData2();
       } catch (error) {
             // Handle network error or other exceptions
             alert(error);
