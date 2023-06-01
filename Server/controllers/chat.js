@@ -21,6 +21,6 @@ const deleteChat = async (req, res) => {
     if (!chat) {
         return res.status(404).json({ errors: ['Chat not found'] });
     }
-};
+}; 
 
 module.exports = {createChat, getChats, getChat, deleteChat};
