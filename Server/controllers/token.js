@@ -14,7 +14,7 @@ async function processLogin(req, res) {
     if (user) {
       const data = { username: req.body.username, password: req.body.password };
       const token = tokenService.generateToken(data);
-      res.status(200).json({ token });
+      res.status(200).send(token);
     } else {
       res.status(404).send('Invalid username and/or password');
     }

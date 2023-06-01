@@ -7,6 +7,6 @@ router.route('/')
     .post(userControllers.createUser)
     .get(userControllers.getAllUsers)
 
-router.route('/username').get(userControllers.getUserByName);
+router.route('/:username').get(userControllers.getUserByName);
     
 module.exports = router;
