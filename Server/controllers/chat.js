@@ -7,7 +7,7 @@ const createChat = async (req, res) => {
     if (req.headers.authorization) {
         // Extract the username from that header
             const token = req.headers.authorization.split(" ")[1];
-            const result = await userService.getUserByName(token);
+            const result = await userService.getUserByToken(token);
             if (!result) {
                 return res.status(404).json("no user Found");
             } else {
@@ -17,31 +17,6 @@ const createChat = async (req, res) => {
         } else{
             }
 };
-
-// const createChat = async (req, res) => {
-//     try {
-//         const { username } = req.body;
-//         if (req.headers.authorization) {
-//             const tokenObject = JSON.parse(
-//                 req.headers.authorization.split(" ")[1]
-//             );
-//             const token = tokenObject.token;
-//             const result = await chatService.createChat(username, token);
-//             res.status(200).json(result);
-//         }
-//     } catch (error) {
-//         if (error.message === "Invalid token") {
-//             return res.status(401).json({ errors: ["Invalid token"] });
-//         } else if (error.message === "Contact not found") {
-//             return res.status(404).json({ errors: ["Contact not found"] });
-//         } else {
-//             res.status(500).json({
-//                 errors: ["An error occurred during chat creation"],
-//             });
-//         }
-//     }
-// };
-
 
 
 const getChats = async (req, res) => {

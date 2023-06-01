@@ -23,8 +23,8 @@ const createChat = async (loggedInUser,username1) => {
                 const newChatCounter = new ChatCounter();
                 await newChatCounter.save();
             }
-            const last = { id: null, created: null, content: null };
-            const chat = new Chat({ id: chatId, users: [loggedUser, user], lastMessage: last });
+            const last = { id: null, created: null, sender: null, content: null };
+            const chat = new Chat({ id: chatId, users: [loggedUser, user]});
             await chat.save();
             const x = {id: chat.id, user};
             return x

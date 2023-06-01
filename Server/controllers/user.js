@@ -12,11 +12,11 @@ const getAllUsers = async (req, res) => {
     res.json(await userService.getAllUsers());
 };
 
-const getUserByName = async (req,res) => {
+const getUserByToken = async (req,res) => {
     if (req.headers.authorization) {
     // Extract the token from that header
         const token = req.headers.authorization.split(" ")[1];
-        const result = await userService.getUserByName(token);
+        const result = await userService.getUserByToken(token);
         if (!result) 
             return res.status(404).json("no user Found");
         else 
@@ -25,4 +25,4 @@ const getUserByName = async (req,res) => {
         }   
 }
 
-module.exports = {createUser, getAllUsers, getUserByName}; 
+module.exports = {createUser, getAllUsers, getUserByToken}; 

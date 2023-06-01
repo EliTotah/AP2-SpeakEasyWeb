@@ -1,27 +1,29 @@
+
 const Message = require('../models/message');
 const chat = require('../services/chat')
+const userService = require ('../services/user');
 
-const createMessage = async (id, content) => {
-    /*const chat = await chat.getChatById(id);   
+const createMessage = async (id, userName, content) => {
+    const chats = await chat.getChatById(id);   
     // find the id
-    var index;  
-    if (chat) {
-    const lastId = chat.lastMessage.id + 1;    
+    if (chats) {
+    const lastId = chats.lastMessage.id + 1;    
     const time = now.toLocaleTimeString(); // format the time as a string
-    const sender = {username:};
-    const chat = new Chat({ id:id1,user:user,lastMessage:last });
-    if (last.lastMessage == NULL) 
-            chat.lastMessage.created = null;
-        return await chat.save();
+    const sender = userService.getUserByName(userName);
+    if(!sender){
+        return 
     }
-    else { return }*/
+    const message = new Message({ id:lastId,created: time, sender: sender, content: content});
+    return await chats.messages.create(message);
+    }
+    else { return  }
 };
 
 const getMessages = async (id) => { 
-    /*const chat = await chat.getChatById(id);     
-    if (chat) {
-        return await Message.findById(id); 
-    }*/
+    const Chats = await chat.getChatById(id);
+    if (Chats) {
+        return await Chats.messages.find({}); 
+    }
 };
 
 module.exports = {createMessage, getMessages};
