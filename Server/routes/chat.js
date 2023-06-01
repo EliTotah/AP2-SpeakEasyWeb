@@ -7,7 +7,7 @@ router.route('/')
     .get(chatController.getChats)
     .post(chatController.createChat)
 
-router.route('/id')
+router.route('/:id')
     .get(chatController.getChat)
     .delete(chatController.deleteChat);
 

@@ -1,25 +1,38 @@
 const Chat = require('../models/chat');
 const User = require('../models/user');
 const chatService = require('../services/chat')
+const userService = require('../services/user')
+const jwt = require('jsonwebtoken');
 
 const createChat = async (username1) => {
-    //const users = chatService.getAllUsers();
-    //const user = users.find((user) => user.userName === username); 
-    const user = User.find({username1});
+    const user = await User.findOne({username : username1});
     if (user) {
-        const user1 = {username:username1, displayName:displayName1, profilePic:profilePic1};
-        const last = {lastMessage:IDlastMessage1, created:created1, content:content1};
-        const chat = new Chat({ id:id1,user:user,lastMessage:last });
-        if (last.lastMessage == NULL) 
-            chat.lastMessage.created = null;
+        const user1 = {username:username1, displayName:user.displayName, profilePic:user.profilePic};
+        const last = {id:null, created:null, content:null};
+        const chat = new Chat({ id:0,user:user1,lastMessage:last });
         return await chat.save();
     }
     else { return }
 };
 
-const getChats = async () => { 
-    return await Chat.find({}); 
-};
+
+
+const getChats = async (token) => { 
+    try {
+        const data = jwt.verify(token, "Some super secret key shhhhhhhhhhhhhhhhh!!!!!");
+        if(!data){
+            return [];
+        }
+        else{
+            const chats = await Chat.find({'user.username' : data.username});
+            return chats;
+        }
+    } catch (error) {
+        // Handle error if the query fails
+        console.error('Error occurred:', error);
+        return [];
+    }
+}
 
 
 const getChatById = async (id) => { return await Chat.findById(id); };

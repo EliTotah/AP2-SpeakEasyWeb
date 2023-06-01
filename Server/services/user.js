@@ -17,27 +17,13 @@ const createUser = async (username, password, displayName, profilePic)=>{
 
 const getAllUsers = async () => { return await User.find({}); };
 
-// const getUserByName = async (userna) => {
-//     // const users = getAllUsers();
-//     // const user = users.find((user) => user.userName === username);      
-//     const user = await User.findOne({username: userna});
-//     if (user) {
-//         return user
-//     }
-//     else{
-//         return null;
-//     }
-// };
-
-
 const getUserByName = async (token)=>{
     try {
 // Verify the token is va
 // lid
-        const data = await jwt.verify(token, "Some super secret key shhhhhhhhhhhhhhhhh!!!!!");
+        const data = jwt.verify(token, "Some super secret key shhhhhhhhhhhhhhhhh!!!!!");
          return await User.findOne({username : data.username});
     }
-
     catch (error){
         return false;
 
