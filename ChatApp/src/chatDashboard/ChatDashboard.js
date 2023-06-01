@@ -14,7 +14,7 @@ import { useLocation } from 'react-router-dom';
 import Users from '../users/Users';
 
 
-function ChatDashboard({activeUser}) {
+function ChatDashboard({activeUser,token}) {
 
     const location = useLocation();
 
@@ -29,15 +29,10 @@ function ChatDashboard({activeUser}) {
   
     const [selecteduser, setselecteduser] = useState();
 
-    // Get the name and picture from the URL parameters
-    const token = new URLSearchParams(location.search).get('token');
-    const userna = new URLSearchParams(location.search).get('usern');
-    const [selecteduserName, setsselecteduserName] = useState(userna)
-
     useEffect(() => {
         async function fetchUserData() {
           try {
-            const response = await fetch(`http://localhost:5000/api/Users/${userna}`, {
+            const response = await fetch(`http://localhost:5000/api/Users/${activeUser}`, {
               'headers': {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token // attach the token
@@ -247,7 +242,7 @@ function ChatDashboard({activeUser}) {
             <div className="right-container">
                 <HeaderChatter name={nameChatter} pic={picChatter}/>
                 <div className="chat-container"> 
-                    <ChatListResults messList1={selectedMessages} username1 ={selecteduserName}/> 
+                    <ChatListResults messList1={selectedMessages} username1 ={activeUser}/> 
                 </div>  
                 <SendBox addMess={addmessage}/> 
             </div>    
@@ -256,4 +251,4 @@ function ChatDashboard({activeUser}) {
   );
 }
 
-export default ChatDashboard;
+export default ChatDashboard;

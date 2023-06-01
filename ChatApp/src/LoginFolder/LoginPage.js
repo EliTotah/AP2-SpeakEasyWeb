@@ -8,7 +8,7 @@ import Users from '../users/Users';
 import { useNavigate } from 'react-router-dom';
 
 
-function LoginPage({ setActiveUser }) {
+function LoginPage({ setActiveUser,setToken }) {
     const navigate = useNavigate();
 
     const [username1, setUsername] = useState('');
@@ -39,7 +39,8 @@ function LoginPage({ setActiveUser }) {
             else {
                 // Navigate to the ChatDashboard route with name and picture as URL parameters
                 setActiveUser(username1);
-                navigate(`/Chat?token=${token}&usern=${username1}`);
+                setToken(token);
+                navigate(`/Chat`);
             }
         } catch (error) {
             alert(error);
@@ -81,4 +82,4 @@ function LoginPage({ setActiveUser }) {
 };
 
 
-export default LoginPage;
+export default LoginPage;
