@@ -38,7 +38,7 @@ const getUserByToken = async (token) => {
 const getUserByName = async (userName) => {
     try {
         const users = await getAllUsers();
-        const user = users.find((user) => user.username === username);
+        const user = users.find((user) => user.username === userName);
         if (!user) {
             return null;
         }

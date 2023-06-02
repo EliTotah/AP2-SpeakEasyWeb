@@ -4,10 +4,6 @@ const UserSchema = require('./user')
 const Schema = mongoose.Schema;
 
 const message = new Schema ({
-    id: {
-        type: Number,
-        nullable: true 
-      },
     created: {
         type: Date,
         nullable: true 
@@ -23,8 +19,4 @@ const message = new Schema ({
     }
     });
 
-const Message1 = mongoose.model('Message', message);
-
-module.exports = {
-  Message1,
-};
+module.exports = mongoose.model('Message', message);
