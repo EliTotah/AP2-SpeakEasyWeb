@@ -208,7 +208,7 @@ function ChatDashboard({activeUser,token}) {
                 throw new Error(await response.text());
             }
             const data = await response.json();
-            const sortedData = [...data].sort((a, b) => a.id - b.id);
+            const sortedData = [...data].sort((a, b) => a.created - b.created);
             setSelectedMessages(sortedData);
             setpicChatter(contact.user.profilePic);
             setnameChatter(contact.user.displayName);

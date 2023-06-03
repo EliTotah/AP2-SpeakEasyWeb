@@ -9,9 +9,10 @@ const message = new Schema ({
         nullable: true 
     },
     sender: { 
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        nullable: true 
+        username: {
+            type: String,
+            nullable: true
+        }
     },
     content: {
         type: String,
