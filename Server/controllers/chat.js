@@ -9,10 +9,13 @@ const createChat = async (req, res) => {
             const token = req.headers.authorization.split(" ")[1];
             const result = await userService.getUserByToken(token);
             if (!result) {
-                return res.status(404).json("no user Found");
+                return res.status(404).json("user not found");
             } else {
                 const newChat = await chatService.createChat(result.username, req.body.username);
-                return res.json(newChat);
+                if(newChat)
+                    return res.json(newChat);
+                else
+                    return res.status(404).json("user not found");
             }
         } else{
             }

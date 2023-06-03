@@ -6,15 +6,12 @@ const userService = require ('../services/user');
 const createMessage = async (id, userName, content) => {
     const chats = await chat.findOne({id});   
     // find the id
-    if (chats) {
-    //console.log(chats.lastMessage.id);
-    //const lastId = chats.lastMessage[0];    
+    if (chats) {   
     const time = new Date().toLocaleString(); // format the time as a string
     const sender = await userService.getUserByName(userName);
     if(!sender){
         return 
     }
-    //console.log(sender);
     const message = new Message ({created: time, sender: sender, content: content});
     const savedMessage = await Message.create(message);
     chats.messages.push(savedMessage);
