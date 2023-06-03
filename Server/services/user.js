@@ -3,25 +3,45 @@ const UserPassName = require('../models/UserPassName')
 const jwt = require('jsonwebtoken');
 
 const createUser = async (username, password, displayName, profilePic) => {
-    const users = await getAllUsers();
-    const user = users.find((user) => user.username === username);
-    if (!user) {
-        const newUserPass = new UserPassName({ username: username, password: password, displayName: displayName, profilePic: profilePic });
-        UserPassName.create(newUserPass);
-
-        const newuser = new User({ username: username, displayName: displayName, profilePic: profilePic });
-        const savedUser = await User.create(newuser);
-        return savedUser;
+    try {
+        const users = await getAllUsers();
+        const user = users.find((user) => user.username === username);
+        if (!user) {
+            const newUserPass = new UserPassName({ username: username, password: password, displayName: displayName, profilePic: profilePic });
+            UserPassName.create(newUserPass);
+            const newuser = new User({ username: username, displayName: displayName, profilePic: profilePic });
+            const savedUser = await User.create(newuser);
+            return savedUser;
+        }
+        //in case there is already user in this name
+        else {
+            throw new Error("UserName already exist");
+        }
     }
-    //in case there is already user in this name
-    else {
-        return null;
+    catch (error) {
+        if (error.message == "UserName already exist") 
+            throw error;
+        else 
+            throw new Error('Internal Server Error');
     }
-};
+}
 
-const getAllUsers = async () => { return await User.find({}); };
+const getAllUsers = async () => {
+    try {
+        return await User.find({});
+    } catch (error) {
+        throw new Error('Internal Server Error');
+    }
+}
 
-const getAllUsersPassName = async () => { return await UserPassName.find({}); };
+const getAllUsersPassName = async () => {
+    try {
+        return await UserPassName.find({});
+    }
+    catch (error) {
+        throw new Error('Internal Server Error');
+    }
+}
 
 
 const getUserByToken = async (token) => {
@@ -31,7 +51,7 @@ const getUserByToken = async (token) => {
         return await User.findOne({ username: data.username });
     }
     catch (error) {
-        return false;
+        throw new Error('Internal Server Error');
     }
 }
 
@@ -40,17 +60,20 @@ const getUserByName = async (userName) => {
         const users = await getAllUsers();
         const user = users.find((user) => user.username === userName);
         if (!user) {
-            return null;
+            throw new Error('UserName not found');
         }
         else {
             return user;
         }
     }
     catch (error) {
-        return false;
+        if (error.message == "UserName not found") 
+            throw error;
+        else 
+            throw new Error('Internal Server Error');
     }
 }
 
 
-module.exports = { createUser, getAllUsers, getUserByToken, getAllUsersPassName , getUserByName};
+module.exports = { createUser, getAllUsers, getUserByToken, getAllUsersPassName, getUserByName };
 
