@@ -17,11 +17,9 @@ const createMessage = async (id, userName, content) => {
     //console.log(sender);
     const message = new Message ({created: time, sender: sender, content: content});
     const savedMessage = await Message.create(message);
-    console.log(chats.messages);
-    console.log(savedMessage);
-    // chats.messages[0]= savedMessage;
-    // console.log(chat.messages[0]);
-    return savedMessage;
+    chats.messages.push(savedMessage);
+    await chats.save();
+    return await savedMessage.save();
     }
     else { return  }
 };
