@@ -10,8 +10,11 @@ const createMessage = async (req, res) => {
         if (!result) {
             return res.status(404).json("no user Found");
         } else {
-            const message = await messageService.createMessage(req.param.id, result.username, req.body.msg);
-            console.log(message);
+            const {id} = req.params;
+            console.log(id);
+            const msg = req.body.msg;
+            console.log(msg);
+            const message = await messageService.createMessage(id, result.username, msg);
             return res.json(message);
         }
     }
@@ -28,7 +31,11 @@ const getMessages = async (req, res) => {
             return res.status(404).json("no user Found");
         }
         else{
-            res.json(await messageService.getMessages(req.param.id));
+            const {id} = req.params;
+            console.log(id)
+            const x = await messageService.getMessages(id);
+            console.log(x);
+            return res.json(await messageService.getMessages(id));
         }
     }
 };
