@@ -8,7 +8,6 @@ const ChatCounter = require('../models/chatCounterSchema');
 const createChat = async (loggedInUser,username1) => {
     const loggedUser = await User.findOne({ username: loggedInUser });
     if (loggedUser) {
-        //const last = { id: null, created: null, content: null };
         const user = await User.findOne({ username: username1 });
         if (user) {
             const chatCounter = await ChatCounter.findOne();
@@ -24,7 +23,6 @@ const createChat = async (loggedInUser,username1) => {
                 await newChatCounter.save();
             }
             const chat = new Chat({ id: chatId, users: [loggedUser, user], messages: []});
-            console.log(chat);
             await chat.save();
             const x = {id: chat.id, user};
             return x
@@ -43,13 +41,13 @@ const getChats = async (token) => {
         }
         else {
             const chats = await Chat.find({'users.username': data.username });
-            var lastMessage=null;
             const contactList = chats.map((chat) => {
+                var lastMessage=null;
                 const otherUser = chat.users.find(user => user.username !==  data.username );
                 var size= chat.messages.length
                 if(size!==0)
                 {
-                lastMessage = chat.messages[0];
+                lastMessage = chat.messages[size-1];
                 }
                 // Access the chat properties and perform operations
                 const contact = {

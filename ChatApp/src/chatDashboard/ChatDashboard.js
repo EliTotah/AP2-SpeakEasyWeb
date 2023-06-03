@@ -157,7 +157,7 @@ function ChatDashboard({activeUser,token}) {
                     throw new Error('Error');
                 }
                 const data = await response2.json();
-                const sortedData = [...data].sort((a, b) => a.id - b.id);
+                const sortedData = [...data].sort((a, b) => a.created - b.created);
                 setSelectedMessages(sortedData);
                 fetchchatsData2();
         } catch (error) {
