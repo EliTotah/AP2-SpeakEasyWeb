@@ -71,7 +71,7 @@ const getChats = async (token) => {
 const getChatById = async (id) => { return await Chat.findById(id); };
 
 const deleteChat = async (id) => {
-    const chat = await getChatById(id);
+    const chat = await Chat.findById(id);
     if (!chat) return null;
     await chat.remove();
 };

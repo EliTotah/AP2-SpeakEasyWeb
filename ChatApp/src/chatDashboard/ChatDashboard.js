@@ -1,22 +1,15 @@
-import ChatLists from "./ChatList";
 import HeaderChatter from "./HeaderChatter";
 import HeaderProfile from "./HeaderProfile";
 import SearchBox from "./SearchBox";
 import SendBox from "./SendBox";
 import './ChatDashboard.css'
-import Contacts from './Contacts.js'
-import biden from '../img/Biden.jpg';
 import { useState, useEffect } from "react";
 import ContactListResults from "./ContactListResults";
-import messList from './messegesLists.js';
 import ChatListResults from './ChatListResult.js';
 import { useLocation } from 'react-router-dom';
-import Users from '../users/Users';
 
 
 function ChatDashboard({activeUser,token}) {
-
-    const location = useLocation();
 
     const [displayName1, setdisplayName] = useState();
     const [pictureHead, setpictureHead] = useState();
@@ -39,21 +32,19 @@ function ChatDashboard({activeUser,token}) {
               },
             });
             if (response.status !== 200){
-                throw new Error('Error')
+                throw new Error(await response.text());
             }
             const data = await response.json();
             setpictureHead(data.profilePic);
             setdisplayName(data.displayName);
           } catch (error) {
-            alert(error);
+              alert(error.message);
           }
         }
     
         async function fetchchatsData() {
           try {
-
             const response = await fetch(`http://localhost:5000/api/Chats`, {
-
               'headers': {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token // attach the token
@@ -61,12 +52,12 @@ function ChatDashboard({activeUser,token}) {
             });
 
             if (response.status !== 200){
-                throw new Error('Error')
+                throw new Error(await response.text())
             }
             const data = await response.json();
             setcontactList(data);
           } catch (error) {
-            alert(error);
+            alert(error.message);
           }
         }
     
@@ -86,12 +77,12 @@ function ChatDashboard({activeUser,token}) {
         });
 
         if (response.status !== 200){
-            throw new Error('Error')
+            throw new Error(await response.text())
         }
         const data = await response.json();
         setcontactList(data);
       } catch (error) {
-        alert(error);
+        alert(error.message);
       }
     }
 
@@ -114,9 +105,8 @@ function ChatDashboard({activeUser,token}) {
               },
               'body': JSON.stringify(d)
             });
-
             if (response.status !== 200){
-                throw new Error('The user you requested does not exist in the system')
+                throw new Error(await response.text())
             }
             fetchchatsData2();
       } catch (error) {
@@ -143,7 +133,7 @@ function ChatDashboard({activeUser,token}) {
               });
 
               if (response1.status !== 200){
-                throw new Error('Error in send message');
+                throw new Error(response1.text());
             }
                 const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
 
@@ -154,7 +144,7 @@ function ChatDashboard({activeUser,token}) {
                 });
 
                 if (response2.status !== 200){
-                    throw new Error('Error');
+                    throw new Error(response2.text());
                 }
                 const data = await response2.json();
                 const sortedData = [...data].sort((a, b) => a.created - b.created);
@@ -162,7 +152,7 @@ function ChatDashboard({activeUser,token}) {
                 fetchchatsData2();
         } catch (error) {
           // Handle network error or other exceptions
-          alert(error);
+          alert(error.message);
           }
     };
 
@@ -187,13 +177,13 @@ function ChatDashboard({activeUser,token}) {
             });
 
             if (response.status !== 200){
-                throw new Error('Error');
+                throw new Error(await response.text());
             }
             const data = await response.json();
             const filteredData = data.filter(contact => contact.user.displayName.startsWith(q));
             setcontactList(filteredData);
         } catch (error) {
-            alert(error);
+            alert(error.message);
           }
     }
 
@@ -215,7 +205,7 @@ function ChatDashboard({activeUser,token}) {
             });
 
             if (response.status !== 200){
-                throw new Error('Error');
+                throw new Error(await response.text());
             }
             const data = await response.json();
             const sortedData = [...data].sort((a, b) => a.id - b.id);
@@ -224,7 +214,7 @@ function ChatDashboard({activeUser,token}) {
             setnameChatter(contact.user.displayName);
             setselecteduser(contact.id);
             } catch (error) {
-                alert(error);
+                alert(error.message);
             }
     };
 
