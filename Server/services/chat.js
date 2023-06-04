@@ -33,7 +33,7 @@ const createChat = async (loggedInUser, username1) => {
         else { throw new Error("UserName not exist"); }
     }
     catch (error) {
-        if (error.message == "UserName not exist")
+        if (error.message === "UserName not exist")
             throw error;
         else
             throw new Error('Internal Server Error');
@@ -76,7 +76,7 @@ const getChats = async (token) => {
             }
         }
     } catch (error) {
-        if (error.message == "UserName not exist" || error.message == "chat not found")
+        if (error.message === "UserName not exist" || error.message === "chat not found")
             throw error;
         else
             throw new Error('Internal Server Error');

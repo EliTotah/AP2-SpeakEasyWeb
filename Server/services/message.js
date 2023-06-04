@@ -14,32 +14,34 @@ const createMessage = async (id, userName, content) => {
             if (!sender1) {
                 throw new Error("UserName not exist");
             }
-            const message = new Message({ created: time, {username:sender1.username}, content: content });
+            const message = new Message({ created: time, sender:{username:sender1.username}, content: content });
             const savedMessage = await Message.create(message);
             chats.messages.push(savedMessage);
             await chats.save();
             return await savedMessage.save();
         }
-        else { throw new Error("chat not found"); }
+        else {
+             throw new Error("chat not found"); 
+            }
     } catch (error) {
-        if (error.message == "UserName not exist" || error.message == "chat not found")
+        if (error.message === "UserName not exist" || error.message === "chat not found")
             throw error;
         else
             throw new Error('Internal Server Error');
     }
-};
+}
 
 const getMessages = async (id) => {
     try {
         const Chats = await chat.findOne({ id });
         if (Chats) {
-            return await Chats.messages;
+            return Chats.messages;
         }
-        else{
+        else {
             throw new Error("chat not found"); 
         }
     } catch (error) {
-        if (error.message == "chat not found")
+        if (error.message === "chat not found")
             throw error;
         else
             throw new Error('Internal Server Error');
