@@ -7,13 +7,9 @@ const createMessage = async (req, res) => {
         if (req.headers.authorization) {
             // Extract the username from that header
             const token = req.headers.authorization.split(" ")[1];
-            const verify = await tokenService.verifyToken(token);
-            if (!verify) {
-                throw new Error("invalid token");
-            }
             const result = await userService.getUserByToken(token);
             if (!result) {
-                return res.status(404).json("no user Found");
+                return res.status(404).json("user not  found");
             } else {
                 const { id } = req.params;
                 const msg = req.body.msg;
@@ -22,7 +18,7 @@ const createMessage = async (req, res) => {
             }
         }
     } catch (error) {
-        if (error.message == "no user Found" || error.message == "invalid token")
+        if (error.message === "user not  found" || error.message === "invalid token")
             throw error;
         else
             throw new Error('Internal Server Error');
@@ -34,9 +30,6 @@ const getMessages = async (req, res) => {
         if (req.headers.authorization) {
             // Extract the username from that header
             const token = req.headers.authorization.split(" ")[1];
-            if (!verify) {
-                throw new Error("invalid token");
-            }
             const result = await userService.getUserByToken(token);
             if (!result) {
                 return res.status(404).json("no user Found");
@@ -48,7 +41,7 @@ const getMessages = async (req, res) => {
             }
         }
     } catch (error) {
-        if (error.message == "no user Found" || error.message == "invalid token")
+        if (error.message === "no user Found" || error.message === "invalid token")
             throw error;
         else
             throw new Error('Internal Server Error');
