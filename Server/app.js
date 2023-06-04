@@ -31,7 +31,7 @@ const chat = require('./routes/chat');
 const { Socket } = require('dgram');
 app.use('/api/Chats',chat);
 
-app.use('/',express.static('../ChatApp/build'));
+app.use('/',express.static('public'));
 
 app.use(cors());
 const server = http.createServer(app);
