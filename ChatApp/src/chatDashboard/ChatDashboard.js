@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import ContactListResults from "./ContactListResults";
 import ChatListResults from './ChatListResult.js';
 import { useLocation } from 'react-router-dom';
-
+import io from "socket.io-client"
 
 function ChatDashboard({activeUser,token}) {
 
@@ -21,6 +21,8 @@ function ChatDashboard({activeUser,token}) {
     const [nameChatter, setnameChatter] = useState();
   
     const [selecteduser, setselecteduser] = useState();
+
+    const socket = io.connect("http://localhost:5000");
 
     useEffect(() => {
         async function fetchUserData() {
@@ -60,11 +62,14 @@ function ChatDashboard({activeUser,token}) {
             alert(error.message);
           }
         }
-    
+        
+        socket.on("receive_message",(data) => {
+          setSelectedMessages(data);
+        });
         // Call the functions
         fetchUserData();
         fetchchatsData();
-    },[]);
+    },[socket]);
 
     async function fetchchatsData2() {
       try {
@@ -118,9 +123,7 @@ function ChatDashboard({activeUser,token}) {
  const addmessage = async (content1)=>{
         const idChat = selecteduser
         try{
-
               const response1 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
-
                 'method': 'post',
                 'headers': {
                   'authorization': 'Bearer ' + token,
@@ -129,14 +132,11 @@ function ChatDashboard({activeUser,token}) {
                 'body': JSON.stringify({
                   msg: content1
                 })
-                
               });
-
-              if (response1.status !== 200){
+              if (response1.status !== 200) {
                 throw new Error(response1.text());
-            }
+              }
                 const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
-
                     'headers': {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token // attach the token
@@ -149,7 +149,8 @@ function ChatDashboard({activeUser,token}) {
                 const data = await response2.json();
                 const sortedData = [...data].sort((a, b) => a.created - b.created);
                 setSelectedMessages(sortedData);
-                fetchchatsData2();
+                //fetchchatsData2();
+                socket.emit("send_message",{data,selecteduser});
         } catch (error) {
           // Handle network error or other exceptions
           alert(error.message);
@@ -187,12 +188,6 @@ function ChatDashboard({activeUser,token}) {
           }
     }
 
-    // const handleContactClick  = async (contact) => {
-    //     setSelectedMessages(contact.messages);
-    //     setpicChatter(contact.pic);
-    //     setnameChatter(contact.name);
-    // };
-
     const handleContactClick = async (contact) => {
         const idChat = contact.id;
         try {
@@ -213,6 +208,7 @@ function ChatDashboard({activeUser,token}) {
             setpicChatter(contact.user.profilePic);
             setnameChatter(contact.user.displayName);
             setselecteduser(contact.id);
+            socket.emit("join_chat",selecteduser);
             } catch (error) {
                 alert(error.message);
             }
