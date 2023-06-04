@@ -1,4 +1,3 @@
-//const { model } = require('mongoose');
 const tokenService = require('../services/token');
 const userService = require('../services/user')
 
