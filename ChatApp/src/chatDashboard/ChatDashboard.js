@@ -28,31 +28,27 @@ function ChatDashboard({activeUser,token}) {
       const socket1 = io.connect('http://localhost:5000');
   
       setSocket(socket1);
-      socket.emit("join_chat",selecteduser);
+      if(socket && selecteduser) {
+        socket.emit("join_chat",selecteduser);
+      }
       return () => {
         if(socket) {
         // Clean up the WebSocket connection when the component unmounts
         socket.disconnect();
         }
       };
-    }, []);
-    let a;
+    }, [selecteduser]);
+
     useEffect(() => { 
       if (socket) {
         socket.on("receive_message",(data) => {
-        console.log("1. " + data.chatId);
-        console.log("2. " + selecteduser);
-        if (data.chatId === selecteduser) {          
-          //setSelectedMessages(data.content);
-          getMessages2();
-          console.log("in");
+        //if (data.chatId === selecteduser) {          
+        setSelectedMessages((list) => [...list, data.content]);
+        fetchchatsData2();
+        //getMessages2();
         }
-      });}
-      else {
-        console.log("1. " + a);
-        console.log("2. " + selecteduser);
-      }
-  },[socket, selecteduser]);
+      );}
+  },[socket]);
 
     useEffect(() => {
         async function fetchUserData() {
@@ -180,6 +176,12 @@ function ChatDashboard({activeUser,token}) {
               if (response1.status !== 200) {
                 throw new Error(response1.text());
               }
+              const data2 = await response1.json();
+               // Emit the message to the WebSocket server
+               socket.emit('send_message', {
+                chatId: selecteduser,
+                content: data2,
+              });
                 const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
                     'headers': {
                     'Content-Type': 'application/json',
@@ -193,11 +195,7 @@ function ChatDashboard({activeUser,token}) {
                 const data = await response2.json();
                 const sortedData = [...data].sort((a, b) => a.created - b.created);
                 setSelectedMessages(sortedData);
-                 // Emit the message to the WebSocket server
-                socket.emit('send_message', {
-                  chatId: selecteduser,
-                  content: data,
-                });
+                
                 fetchchatsData2();
         } catch (error) {
           // Handle network error or other exceptions
