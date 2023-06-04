@@ -1,4 +1,4 @@
-# AP2---ex1
+# AP2---ex3
 
 The project in advanced programming2.
 
@@ -48,13 +48,6 @@ The chat app allows users to add new contacts, which appear in the "in conversat
 * Chatting with other users
 * Real-time message updates
 * Responsive design for Desktop devices
-
-# Future Development
-In the future, we plan to add more features to the chat site. These may include:
-
-* The ability to search for other users and start new chats
-* The ability to send images and other multimedia in chats
-* The ability to customize the chat screen with themes and backgrounds
 
 # Technologies Used
 The project was created using HTML and CSS. The UI is designed to be simple and user-friendly. The website is fully responsive and works on desktop devices.

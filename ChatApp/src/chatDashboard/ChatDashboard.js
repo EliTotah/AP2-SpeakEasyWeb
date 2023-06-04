@@ -114,7 +114,7 @@ function ChatDashboard({activeUser,token}) {
         const data = await response.json();
         setcontactList(data);
       } catch (error) {
-        alert(error.message);
+          alert(error.message);
       }
     }
 
