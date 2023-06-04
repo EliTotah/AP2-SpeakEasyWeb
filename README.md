@@ -49,6 +49,23 @@ The chat app allows users to add new contacts, which appear in the "in conversat
 * Real-time message updates
 * Responsive design for Desktop devices
 
+# API Explanation
+The server exposes a RESTful API that operates relative to the current logged-in user, identified by a token. The following endpoints are part of the API:
+
+http://localhost:5000/api/Chats: The address for accessing user chats.
+
+The GET operation retrieves all chats of the current user.
+The POST operation creates a new chat with the specified contact.
+http://localhost:5000/api/Tokens: The address for generating a JWT (JSON Web Token) for the registered user.
+
+The POST operation creates a JWT for the user registered in the system.
+http://localhost:5000/api/Users: The address for creating a new user.
+
+The POST operation creates a new user.
+http://localhost:5000/api/Users/:id: The address for retrieving user details by identifier.
+
+The GET operation gives the details of the user with the specified identifier.
+
 # Technologies Used
 The project was created using HTML and CSS. The UI is designed to be simple and user-friendly. The website is fully responsive and works on desktop devices.
 
