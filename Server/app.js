@@ -48,10 +48,8 @@ io.on("connection", (socket) => {
     });
 
     socket.on("send_message", (data) => {
-        socket.to(data.chat).emit("receive_message",data);
+        socket.to(data.chatId).emit("receive_message",data);
     });
 })
 
-
-
-app.listen(process.env.PORT);
+server.listen(process.env.PORT);
