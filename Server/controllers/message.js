@@ -9,7 +9,7 @@ const createMessage = async (req, res) => {
             const token = req.headers.authorization.split(" ")[1];
             const result = await userService.getUserByToken(token);
             if (!result) {
-                return res.status(404).json("user not  found");
+                return res.status(404).json("user not found");
             } else {
                 const { id } = req.params;
                 const msg = req.body.msg;
