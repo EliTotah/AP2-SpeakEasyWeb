@@ -53,7 +53,8 @@ The chat app allows users to add new contacts, which appear in the "in conversat
 The project was created using HTML and CSS. The UI is designed to be simple and user-friendly. The website is fully responsive and works on desktop devices.
 
 # Getting Started
-To view the website, simply open any of the HTML files in a web browser. The website is designed to be easy to use and navigate. When you first open the website, you will see the login screen. You can either log in with your existing credentials or click on the link to register a new account. Once you are logged in, you will be taken to the chat screen.
+cd Server
+npm start
 
 # Author
 This project was created by [_@Ofirroth_](https://github.com/Ofirroth) and [_@EliTotah_](https://github.com/EliTotah).
