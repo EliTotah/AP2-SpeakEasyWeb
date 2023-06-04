@@ -56,12 +56,15 @@ http://localhost:5000/api/Chats: The address for accessing user chats.
 
 The GET operation retrieves all chats of the current user.
 The POST operation creates a new chat with the specified contact.
+
 http://localhost:5000/api/Tokens: The address for generating a JWT (JSON Web Token) for the registered user.
 
 The POST operation creates a JWT for the user registered in the system.
+
 http://localhost:5000/api/Users: The address for creating a new user.
 
 The POST operation creates a new user.
+
 http://localhost:5000/api/Users/:id: The address for retrieving user details by identifier.
 
 The GET operation gives the details of the user with the specified identifier.
