@@ -15,7 +15,6 @@ function ContactList({ contact, onClick }) {
         hours = ("0" + date.getHours()).slice(-2); // Add leading zero if necessary
         minutes = ("0" + date.getMinutes()).slice(-2); // Add leading zero if necessary
     }
-
     const formattedDate = `${day}/${month}/${year}`;
     const formattedTime = `${hours}:${minutes}`;
 
