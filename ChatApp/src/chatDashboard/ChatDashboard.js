@@ -22,7 +22,37 @@ function ChatDashboard({activeUser,token}) {
   
     const [selecteduser, setselecteduser] = useState();
 
-    const socket = io.connect("http://localhost:5000");
+    const [socket, setSocket] = useState(null);
+
+    useEffect(() => {
+      const socket1 = io.connect('http://localhost:5000');
+  
+      setSocket(socket1);
+      socket.emit("join_chat",selecteduser);
+      return () => {
+        if(socket) {
+        // Clean up the WebSocket connection when the component unmounts
+        socket.disconnect();
+        }
+      };
+    }, []);
+    let a;
+    useEffect(() => { 
+      if (socket) {
+        socket.on("receive_message",(data) => {
+        console.log("1. " + data.chatId);
+        console.log("2. " + selecteduser);
+        if (data.chatId === selecteduser) {          
+          //setSelectedMessages(data.content);
+          getMessages2();
+          console.log("in");
+        }
+      });}
+      else {
+        console.log("1. " + a);
+        console.log("2. " + selecteduser);
+      }
+  },[socket, selecteduser]);
 
     useEffect(() => {
         async function fetchUserData() {
@@ -62,14 +92,10 @@ function ChatDashboard({activeUser,token}) {
             alert(error.message);
           }
         }
-        
-        socket.on("receive_message",(data) => {
-          setSelectedMessages(data);
-        });
         // Call the functions
         fetchUserData();
         fetchchatsData();
-    },[socket]);
+    },[]);
 
     async function fetchchatsData2() {
       try {
@@ -91,11 +117,29 @@ function ChatDashboard({activeUser,token}) {
       }
     }
 
+    async function getMessages2() {
+      const idChat = selecteduser
+      try {
 
-    const addContact2 = (pic1, name1, time1, unreadmsg1, messages1) => {
-        // Update the Contacts array directly
-        const newContact = {pic:pic1, name:name1, time:time1, unreadmsg:unreadmsg1,messages:messages1};
-        setcontactList((prevContacts) => [...prevContacts, newContact]);
+        const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
+                    'headers': {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token // attach the token
+                    },
+                });
+
+                if (response2.status !== 200){
+                    throw new Error(response2.text());
+                }
+                const data = await response2.json();
+                const sortedData = [...data].sort((a, b) => a.created - b.created);
+                setSelectedMessages(sortedData);
+                 // Emit the message to the WebSocket server
+                fetchchatsData2();
+        } catch (error) {
+          // Handle network error or other exceptions
+          alert(error.message);
+          }
     };
 
     async function addContact(name1) {
@@ -149,22 +193,17 @@ function ChatDashboard({activeUser,token}) {
                 const data = await response2.json();
                 const sortedData = [...data].sort((a, b) => a.created - b.created);
                 setSelectedMessages(sortedData);
-                //fetchchatsData2();
-                socket.emit("send_message",{data,selecteduser});
+                 // Emit the message to the WebSocket server
+                socket.emit('send_message', {
+                  chatId: selecteduser,
+                  content: data,
+                });
+                fetchchatsData2();
         } catch (error) {
           // Handle network error or other exceptions
           alert(error.message);
           }
     };
-
-    const addmessage2 = (content1, time1, classtype1) => {
-        // Update the Contacts array directly
-        const newMessage = {content:content1, time:time1, classtype:classtype1};
-        selectedMessages.push(newMessage);
-        const mess = [...selectedMessages];
-        setSelectedMessages(mess);
-      };
-
     
     const doSearch = async function(q) {
         try {
@@ -192,7 +231,6 @@ function ChatDashboard({activeUser,token}) {
         const idChat = contact.id;
         try {
             const response = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
-
                 'headers': {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token // attach the token
@@ -208,7 +246,6 @@ function ChatDashboard({activeUser,token}) {
             setpicChatter(contact.user.profilePic);
             setnameChatter(contact.user.displayName);
             setselecteduser(contact.id);
-            socket.emit("join_chat",selecteduser);
             } catch (error) {
                 alert(error.message);
             }
@@ -236,5 +273,8 @@ function ChatDashboard({activeUser,token}) {
     </div>      
   );
 }
+
+
+//socket.emit("join_chat",selecteduser);
 
 export default ChatDashboard;
