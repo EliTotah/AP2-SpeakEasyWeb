@@ -47,8 +47,16 @@ io.on("connection", (socket) => {
         socket.join(data);
     });
 
+    socket.on("add-contact",(username) => {
+        if(!socket.in(username)){
+            return;
+        }
+        socket.in(username).emit("add-contact");
+    })
+
+
     socket.on("send_message", (data) => {
-        socket.to(data.chatId).emit("receive_message",data);
+        socket.in(data.receiverUser).emit("receive_message",data);
     });
 })
 

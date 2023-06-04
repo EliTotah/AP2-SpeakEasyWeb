@@ -3,7 +3,7 @@ import HeaderProfile from "./HeaderProfile";
 import SearchBox from "./SearchBox";
 import SendBox from "./SendBox";
 import './ChatDashboard.css'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ContactListResults from "./ContactListResults";
 import ChatListResults from './ChatListResult.js';
 import { useLocation } from 'react-router-dom';
@@ -19,36 +19,42 @@ function ChatDashboard({activeUser,token}) {
 
     const [picChatter, setpicChatter] = useState();
     const [nameChatter, setnameChatter] = useState();
-  
-    const [selecteduser, setselecteduser] = useState();
 
-    const [socket, setSocket] = useState(null);
+    const [selecteduser, setselecteduser] = useState();
+    const [selecteduserChat, setselecteduserChat] = useState();
+    const [newMessage, setNewMessage] = useState();
+
+    const socket = useRef(null);
 
     useEffect(() => {
-      const socket1 = io.connect('http://localhost:5000');
-  
-      setSocket(socket1);
-      if(socket && selecteduser) {
-        socket.emit("join_chat",selecteduser);
+      if (!(selecteduserChat)) {
+          return;
       }
+      if (selecteduserChat.id === newMessage.chatId) {
+          setSelectedMessages((list) => [...list, newMessage.message]);
+      }
+  },[newMessage]);
+
+    useEffect(() => {
+      socket.current = io.connect('http://localhost:5000');
+      socket.current.emit("join_chat",activeUser);
+      socket.current.on("add-contact", ()=>{
+        fetchchatsData2().then(data =>{
+        });
+      });
+      socket.current.on("receive_message",(data) => {
+      fetchchatsData2();
+      setNewMessage(data);        
+      }
+      );
       return () => {
-        if(socket) {
+        if(socket.current) {
         // Clean up the WebSocket connection when the component unmounts
-        socket.disconnect();
+        socket.current.disconnect();
         }
       };
-    }, [selecteduser]);
+    }, [activeUser]);
 
-    useEffect(() => { 
-      if (socket) {
-        socket.on("receive_message",(data) => {
-        //if (data.chatId === selecteduser) {          
-        setSelectedMessages((list) => [...list, data.content]);
-        fetchchatsData2();
-        //getMessages2();
-        }
-      );}
-  },[socket]);
 
     useEffect(() => {
         async function fetchUserData() {
@@ -95,7 +101,6 @@ function ChatDashboard({activeUser,token}) {
 
     async function fetchchatsData2() {
       try {
-
         const response = await fetch(`http://localhost:5000/api/Chats`, {
           'headers': {
             'Content-Type': 'application/json',
@@ -153,6 +158,8 @@ function ChatDashboard({activeUser,token}) {
             if (response.status !== 200){
                 throw new Error(await response.text())
             }
+            //לעדכן את השרת שביצענו הוספת איש קשר לשרת
+            socket.current.emit("add-contact", name1);
             fetchchatsData2();
       } catch (error) {
             // Handle network error or other exceptions
@@ -177,11 +184,13 @@ function ChatDashboard({activeUser,token}) {
                 throw new Error(response1.text());
               }
               const data2 = await response1.json();
+              const data3 = await {
+              chatId: selecteduser,
+              receiverUser: selecteduserChat.user.username,
+              message: data2
+              }
                // Emit the message to the WebSocket server
-               socket.emit('send_message', {
-                chatId: selecteduser,
-                content: data2,
-              });
+               socket.current.emit('send_message', data3);
                 const response2 = await fetch(`http://localhost:5000/api/Chats/${idChat}/Messages`, {
                     'headers': {
                     'Content-Type': 'application/json',
@@ -195,7 +204,6 @@ function ChatDashboard({activeUser,token}) {
                 const data = await response2.json();
                 const sortedData = [...data].sort((a, b) => a.created - b.created);
                 setSelectedMessages(sortedData);
-                
                 fetchchatsData2();
         } catch (error) {
           // Handle network error or other exceptions
@@ -244,6 +252,7 @@ function ChatDashboard({activeUser,token}) {
             setpicChatter(contact.user.profilePic);
             setnameChatter(contact.user.displayName);
             setselecteduser(contact.id);
+            setselecteduserChat(contact);
             } catch (error) {
                 alert(error.message);
             }
@@ -272,7 +281,5 @@ function ChatDashboard({activeUser,token}) {
   );
 }
 
-
-//socket.emit("join_chat",selecteduser);
 
 export default ChatDashboard;
