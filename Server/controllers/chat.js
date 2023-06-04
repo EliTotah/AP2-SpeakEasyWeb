@@ -13,6 +13,9 @@ const createChat = async (req, res) => {
             if (!result) {
                 throw new Error("invalid token");
             } else {
+                if(result.username === req.body.username){
+                    throw new Error("Not allow to add yourself as contact");
+                }
                 const newChat = await chatService.createChat(result.username, req.body.username);
                 if (newChat)
                     return res.status(200).json(newChat);
@@ -24,6 +27,9 @@ const createChat = async (req, res) => {
         }
         else if (error.message === "Contact not found") {
             return res.status(404).json("Contact not found");
+        }
+        else if(error.message === "Not allow to add yourself as contact"){
+            return res.status(404).json("Not allow to add yourself as contact");
         }
         else {
             res.status(500).json('Internal Server Error');

@@ -18,8 +18,12 @@ const createMessage = async (req, res) => {
             }
         }
     } catch (error) {
-        if (error.message === "user not  found" || error.message === "invalid token")
-            throw error;
+        if (error.message === "user not  found") {
+            return res.status(404).json("user not  found");
+        }
+        else if (error.message === "invalid token"){
+            return res.status(404).json("invalid token");
+        }
         else
             throw new Error('Internal Server Error');
     }
@@ -41,8 +45,12 @@ const getMessages = async (req, res) => {
             }
         }
     } catch (error) {
-        if (error.message === "no user Found" || error.message === "invalid token")
-            throw error;
+        if (error.message === "user not  found") {
+            return res.status(404).json("user not  found");
+        }
+        else if (error.message === "invalid token"){
+            return res.status(404).json("invalid token");
+        }
         else
             throw new Error('Internal Server Error');
     }
