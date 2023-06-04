@@ -78,6 +78,8 @@ cd Server
 
 npm start
 
+go to http://localhost:5000/
+
 # Author
 This project was created by [_@Ofirroth_](https://github.com/Ofirroth) and [_@EliTotah_](https://github.com/EliTotah).
 feel free to contact us.
