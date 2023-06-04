@@ -33,6 +33,7 @@ function ChatDashboard({activeUser,token}) {
       if (selecteduserChat.id === newMessage.chatId) {
           setSelectedMessages((list) => [...list, newMessage.message]);
       }
+      alert("new message");
   },[newMessage]);
 
     useEffect(() => {
@@ -158,7 +159,6 @@ function ChatDashboard({activeUser,token}) {
             if (response.status !== 200){
                 throw new Error(await response.text())
             }
-            //לעדכן את השרת שביצענו הוספת איש קשר לשרת
             socket.current.emit("add-contact", name1);
             fetchchatsData2();
       } catch (error) {

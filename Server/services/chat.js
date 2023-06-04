@@ -93,9 +93,14 @@ const getChatById = async (id) => {
 };
 
 const deleteChat = async (id) => {
-    const chat = await Chat.findById(id);
-    if (!chat) return null;
-    await chat.remove();
+    try {
+        const chat = await Chat.findById(id);
+        if (!chat) return null;
+        await chat.remove();
+    }
+    catch (error) {
+        throw new Error('Internal Server Error');
+    }
 };
 
 
