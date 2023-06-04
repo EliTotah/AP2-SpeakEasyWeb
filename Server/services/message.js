@@ -10,11 +10,11 @@ const createMessage = async (id, userName, content) => {
         // find the id
         if (chats) {
             const time = new Date().toLocaleString(); // format the time as a string
-            const sender = await userService.getUserByName(userName);
-            if (!sender) {
+            const sender1 = await userService.getUserByName(userName);
+            if (!sender1) {
                 throw new Error("UserName not exist");
             }
-            const message = new Message({ created: time, sender: sender, content: content });
+            const message = new Message({ created: time, {username:sender1.username}, content: content });
             const savedMessage = await Message.create(message);
             chats.messages.push(savedMessage);
             await chats.save();
