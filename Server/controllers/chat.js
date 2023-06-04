@@ -9,10 +9,6 @@ const createChat = async (req, res) => {
         if (req.headers.authorization) {
             // Extract the username from that header
             const token = req.headers.authorization.split(" ")[1];
-            const verify = await tokenService.verifyToken(token);
-            if (!verify) {
-                throw new Error("invalid token");
-            }
             const result = await userService.getUserByToken(token);
             if (!result) {
                 throw new Error("invalid token");
@@ -46,9 +42,8 @@ const getChats = async (req, res) => {
         }
     }
     catch (error) {
-
+        res.status(500).json('Internal Server Error');
     }
-
 };
 
 const getChat = async (req, res) => {
@@ -64,9 +59,17 @@ const getChat = async (req, res) => {
 };
 
 const deleteChat = async (req, res) => {
-    const chat = await chatService.getChatById(req.params.id);
-    if (!chat) {
-        return res.status(404).json({ errors: ['Chat not found'] });
+    try {
+        const chat = await chatService.getChatById(req.params.id);
+        if (!chat) {
+            return res.status(404).json({ errors: ['Chat not found'] });
+        }
+        else {
+            return res.status(200).json("Chat removed");
+        }
+    }
+    catch (error) {
+        res.status(500).send('Internal Server Error');
     }
 };
 

@@ -21,7 +21,6 @@ function LoginPage({ setActiveUser,setToken }) {
             password: password1
         }
         try {
-
             const res = await fetch('http://localhost:5000/api/Tokens', {
                 'method': 'post', // send a post request
                 'headers': {
@@ -31,10 +30,8 @@ function LoginPage({ setActiveUser,setToken }) {
             });
             // The server's response is a json object
             const token = await res.text();
-            if (res.status === 404)
-                throw new Error('The login information you entered is incorrect')
-            else if (res.status !== 200) {
-                throw new Error('Error in login')
+            if (res.status !== 200){
+                throw new Error(token);
             }
             else {
                 // Navigate to the ChatDashboard route with name and picture as URL parameters
@@ -45,18 +42,6 @@ function LoginPage({ setActiveUser,setToken }) {
         } catch (error) {
             alert(error);
         }
-
-        /*//const user = Users.find((user) => user.userName === username && user.password === password);
-        if (user) {
-            // successful login
-            const name = user.userName;
-            const picture = user.pic;
-            // Navigate to the ChatDashboard route with name and picture as URL parameters
-            navigate(`/Chat?name=${name}&picture=${picture}`);
-        } else {
-            // login failed
-            alert('Invalid username or password');
-        }*/
     };
 
     const handleUsernameChange = (event) => {

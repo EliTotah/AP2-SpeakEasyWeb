@@ -93,7 +93,7 @@ const getChatById = async (id) => {
 };
 
 const deleteChat = async (id) => {
-    const chat = await getChatById(id);
+    const chat = await Chat.findById(id);
     if (!chat) return null;
     await chat.remove();
 };
