@@ -53,7 +53,7 @@ The chat app allows users to add new contacts, which appear in the "in conversat
 The project was created using HTML and CSS. The UI is designed to be simple and user-friendly. The website is fully responsive and works on desktop devices.
 
 # Getting Started
-cd Server
+cd Server"\n"
 npm start
 
 # Author
