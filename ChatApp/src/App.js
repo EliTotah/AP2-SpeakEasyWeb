@@ -19,8 +19,8 @@ function CheckActiveUser({element, activeUser}){
 
 function App() {
 
-const [activeUser , setActiveUser] = useState("");
-const [token, setToken] = useState("");
+const [activeUser , setActiveUser] = useState();
+const [token, setToken] = useState();
 
   return (
     <div>
