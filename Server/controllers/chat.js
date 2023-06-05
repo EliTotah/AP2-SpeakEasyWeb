@@ -25,8 +25,8 @@ const createChat = async (req, res) => {
         if (error.message === "Invalid token") {
             res.status(401).json("Invalid token");
         }
-        else if (error.message === "Contact not found") {
-            return res.status(404).json("Contact not found");
+        else if (error.message === "UserName not exist") {
+            return res.status(404).json("UserName not exist");
         }
         else if(error.message === "Not allow to add yourself as contact"){
             return res.status(404).json("Not allow to add yourself as contact");
