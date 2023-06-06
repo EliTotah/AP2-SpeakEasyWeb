@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import profilePic from './profile4.jpg';
 import './profilePic.css';
 
-function ProfilePic({setImage1}) {
+function ProfilePic({ setImage1 }) {
   const [imageSrc, setImageSrc] = useState(profilePic);
   const [showUploadBtn, setShowUploadBtn] = useState(false);
   setImage1(imageSrc);
@@ -16,20 +16,26 @@ function ProfilePic({setImage1}) {
   };
 
   const handleFileChange = (event) => {
-    console.log(URL.createObjectURL(event.target.files[0]));
-    setImage1(URL.createObjectURL(event.target.files[0]));
-    setImageSrc(URL.createObjectURL(event.target.files[0]));
-  };
+    const file = event.target.files[0];
 
-  const handleImageLoad = (event) => {
-    //setImageSrc(event.target.result);
-    URL.createObjectURL(event.target.result)
-    setImage1(setImageSrc(event.target.result));
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const dataURL = e.target.result;
+        setImage1(dataURL);
+        setImageSrc(dataURL);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
     <div className="profile-pic-div" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <img src={imageSrc} id="photo" alt="Profile" />
+      {imageSrc ? (
+        <img src={imageSrc} id="photo" alt="Profile" />
+      ) : (
+        <div id="placeholder">No image selected</div>
+      )}
       <input type="file" id="file" onChange={handleFileChange} style={{ display: 'none' }} />
       {showUploadBtn && (
         <label htmlFor="file" id="uploadBtn">

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.c740937a.css",
-    "main.js": "/static/js/main.617fceac.js",
+    "main.css": "/static/css/main.81151e4d.css",
+    "main.js": "/static/js/main.2b8073aa.js",
     "static/media/backgroundchat.png": "/static/media/backgroundchat.f100e5ec11b4eb6bf10d.png",
     "static/media/whatsApp.jpeg": "/static/media/whatsApp.a907fa0a73f082b619cb.jpeg",
     "static/media/trump.jpg": "/static/media/trump.d132d7afee71ae3dcea6.jpg",
@@ -10,11 +10,11 @@
     "static/media/Biden.jpg": "/static/media/Biden.077029a6e63900733e04.jpg",
     "index.html": "/index.html",
     "static/media/check-square-fill.svg": "/static/media/check-square-fill.78acac9ae06d0afd1e26.svg",
-    "main.c740937a.css.map": "/static/css/main.c740937a.css.map",
-    "main.617fceac.js.map": "/static/js/main.617fceac.js.map"
+    "main.81151e4d.css.map": "/static/css/main.81151e4d.css.map",
+    "main.2b8073aa.js.map": "/static/js/main.2b8073aa.js.map"
   },
   "entrypoints": [
-    "static/css/main.c740937a.css",
-    "static/js/main.617fceac.js"
+    "static/css/main.81151e4d.css",
+    "static/js/main.2b8073aa.js"
   ]
 }

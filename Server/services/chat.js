@@ -11,6 +11,15 @@ const createChat = async (loggedInUser, username1) => {
         if (loggedUser) {
             const user = await User.findOne({ username: username1 });
             if (user) {
+                const signed = await Chat.find({
+                    $and: [
+                      { 'users.username': loggedInUser },
+                      { 'users.username': username1 }
+                    ]
+                  });
+                if (signed.length > 0) {
+                    throw new Error("This contact already exist");
+                }
                 const chatCounter = await ChatCounter.findOne();
                 let chatId = 0;
                 if (chatCounter) {
@@ -35,6 +44,9 @@ const createChat = async (loggedInUser, username1) => {
     catch (error) {
         if (error.message === "UserName not exist")
             throw error;
+        else if (error.message === "This contact already exist") {
+                throw error;
+        }
         else
             throw new Error('Internal Server Error');
     }
@@ -72,11 +84,11 @@ const getChats = async (token) => {
                 });
                 return contactList;
             } else {
-                throw new Error("chat not found");
+                return null;
             }
         }
     } catch (error) {
-        if (error.message === "UserName not exist" || error.message === "chat not found")
+        if (error.message === "UserName not exist")
             throw error;
         else
             throw new Error('Internal Server Error');

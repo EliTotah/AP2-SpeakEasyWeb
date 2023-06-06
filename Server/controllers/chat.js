@@ -31,8 +31,11 @@ const createChat = async (req, res) => {
         else if(error.message === "Not allow to add yourself as contact"){
             return res.status(404).json("Not allow to add yourself as contact");
         }
+        else if (error.message === "This contact already exist") {
+            return res.status(404).json("This contact already exist") ;
+        }
         else {
-            res.status(500).json('Internal Server Error');
+            return res.status(500).json('Internal Server Error');
         }
     }
 };
@@ -48,7 +51,10 @@ const getChats = async (req, res) => {
         }
     }
     catch (error) {
-        res.status(500).json('Internal Server Error');
+        if (error.message === "UserName not exist")
+            return res.status(404).json("UserName not exist");
+        else
+            return res.status(500).json('Internal Server Error');
     }
 };
 
@@ -68,7 +74,7 @@ const deleteChat = async (req, res) => {
     try {
         const chat = await chatService.getChatById(req.params.id);
         if (!chat) {
-            return res.status(404).json({ errors: ['Chat not found'] });
+            return res.status(404).json('Chat not found');
         }
         else {
             return res.status(200).json("Chat removed");
