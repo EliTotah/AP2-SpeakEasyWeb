@@ -23,6 +23,10 @@ Screenshot:
 <img width="875" alt="image" src="https://user-images.githubusercontent.com/117304079/234653942-7161023a-cfcf-48bd-bc03-02bcc2edc3b5.png">
 
 # Registration Screen
+
+! important: 
+According to the instructions of the exercise, during the registration you can upload as a profile picture only pictures of small size. Uploading images that are too large will result in the registration failure (failed to fetch).
+
 The registration screen allows users to create a new account by entering their username, password, display name, and picture. A password verification field is also included to ensure that the user enters their password correctly. The registration screen has a similar design to the login screen, with a form for entering user details.
 
 ![sign1](https://github.com/EliTotah/AP2--ex1.2/assets/117304079/e6828c8b-8d30-4923-93f8-e40cb25eeeb3)
