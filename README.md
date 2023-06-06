@@ -24,9 +24,9 @@ Screenshot:
 
 # Registration Screen
 
-!---- important: 
+**important:** 
 
-According to the instructions of the exercise, during the registration you can upload as a profile picture only pictures of small size. Uploading images that are too large will result in the registration failure (failed to fetch).
+**According to the instructions of the exercise, during the registration you can upload as a profile picture only pictures of small size. Uploading images that are too large will result in the registration failure (failed to fetch).**
 
 The registration screen allows users to create a new account by entering their username, password, display name, and picture. A password verification field is also included to ensure that the user enters their password correctly. The registration screen has a similar design to the login screen, with a form for entering user details.
 
