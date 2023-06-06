@@ -19,7 +19,7 @@ const createUser = async (username, password, displayName, profilePic) => {
         }
     }
     catch (error) {
-        if (error.message == "UserName already exist") 
+        if (error.message === "UserName already exist") 
             throw error;
         else 
             throw new Error('Internal Server Error');

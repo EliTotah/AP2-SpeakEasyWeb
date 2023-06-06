@@ -118,8 +118,8 @@ const LoginDetailsPage = ({ addUser30, userName1, name1, pic1, onPrev, setActive
       throw new Error(await response.text());
     }
   } catch (error) {
-    // Handle network error or other exceptions
-    alert(error);
+      // Handle network error or other exceptions
+      alert(error);
     }
   }
 };
